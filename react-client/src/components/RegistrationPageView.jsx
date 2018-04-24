@@ -64,34 +64,6 @@ class Registration extends React.Component {
   }
 
   render () {
-    const paperStyle = {
-      height: 'auto',
-      width: 'auto',
-      display: 'inline-block',
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)'      
-    };
-
-    const buttonStyle = {
-      height: 'auto',
-      width: '100%',
-      textAlign: 'center',
-      display: 'inline-block',
-    };
-
-    const inputStyle = {
-      width:'100%',
-      display: 'inline-block'
-    };
-
-    //make perfect center somehow
-    const toggleStyle = {
-      position:'relative', 
-      left:'50%', 
-      transform: 'translate(-6%, 0%)'
-    }
 
     return (
       <Paper style={paperStyle}>
@@ -117,5 +89,39 @@ class Registration extends React.Component {
     )
   }
 }
+
+const paperStyle = {
+  height: 'auto',
+  width: 'auto',
+  display: 'inline-block',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)'      
+};
+
+const buttonStyle = {
+  height: 'auto',
+  width: '100%',
+  textAlign: 'center',
+  display: 'inline-block',
+};
+
+const inputStyle = {
+  width:'100%',
+  margin: 20,
+  display: 'inline-block',
+  position: 'relative',
+  left: '50%',
+  transform: 'translate(-28%, 0%)'
+
+};
+
+const toggleStyle = {
+  position:'relative', 
+  left:'50%', 
+  transform: 'translate(-6%, 0%)'
+}
+
 
 export default withRouter(Registration);

@@ -11,7 +11,8 @@ const {
   getUserId,
   getUser, 
   setTimestamp, 
-  setVideo, 
+  setVideo,
+  deleteVideo, 
   setUser,
   getBuckets,
   deleteTimestamp, 
@@ -79,18 +80,10 @@ app.get('/student/homepage', (req, res) =>
 //---------------------------------------------------------OWNER USER REQUESTS
 
 app.get('/owner/search', (req, res) => {
-  searchYouTube({key: api, q: req.query.query, maxResults: 1}, 
+  searchYouTube({key: api, q: req.query.query, maxResults: 10}, 
     (video) => {
-      let url = `https://www.googleapis.com/youtube/v3/videos?id=${video[0].id.videoId}&part=contentDetails&key=${api}`;
+      res.status(200).send(video)
       //get duration
-      axios.get(url).then((data) => {
-        let duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
-        setVideo(video[0], req.query.userId, duration, () => {
-          getCurrentVideo(video[0].id.videoId, (video) => 
-            res.status(200).send(video)
-          )
-        })
-      });
     });
 });
 
@@ -98,6 +91,27 @@ app.get('/owner/search', (req, res) => {
 app.get('/owner/videoList', (req, res) => {
   getOwnerVideos(req.query.userId, (videos) => {
     res.send(videos);
+  })
+})
+
+app.post('/owner/save', (req, res) => {
+  const {video, userId} = req.body;
+  let url = `https://www.googleapis.com/youtube/v3/videos?id=${video.id.videoId}&part=contentDetails&key=${api}`;
+  axios.get(url).then((data) => {
+    let duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
+    setVideo(video, userId, duration, (err, resp) => {
+      err ? console.log(err) : console.log('saved video');
+      res.send();
+    })
+  });
+})
+
+app.post('/owner/remove', (req, res) => {
+  const {video, userId} = req.body;
+
+  deleteVideo(video, userId, (err, resp) => {
+    err ? console.log(err) : console.log(resp)
+    res.send('deleted!')
   })
 })
 
@@ -128,6 +142,7 @@ app.get('/timestamps/owner', (req, res) => {
 
 app.post('/timestamps', (req, res) => {
   let params = req.body.params;
+  console.log(params)
   setTimestamp(params, (success) => {res.status(201).send()});
 })
 

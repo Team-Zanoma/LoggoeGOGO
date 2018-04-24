@@ -54,25 +54,6 @@ class LandingPage extends React.Component {
   }
 
   render () {
-    const paperStyle = {
-      height: 'auto',
-      width: 'auto',
-      padding: 10,
-      textAlign: 'center',
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      display: 'inline-block',
-    };
-
-    const buttonStyle = {
-      height: 'auto',
-      width: '100%',
-      textAlign: 'center',
-      display: 'inline-block',
-    };
-
     return (
       <Paper style={paperStyle} zDepth={1}>
 
@@ -107,5 +88,24 @@ class LandingPage extends React.Component {
   }
 
 }
+
+const paperStyle = {
+  height: 'auto',
+  width: 'auto',
+  padding: 10,
+  textAlign: 'center',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  display: 'inline-block',
+};
+
+const buttonStyle = {
+  height: 'auto',
+  width: '100%',
+  textAlign: 'center',
+  display: 'inline-block',
+};
 
 export default withRouter(LandingPage);
