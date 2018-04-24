@@ -108,26 +108,32 @@ const setVideo = (video, userId, duration, callback) => {
   const values = [video.id.videoId, video.snippet.title, video.snippet.description, video.snippet.thumbnails.default.url, userId, duration];
 
   connection.query(query, values, (err, result) => {
-    (err) ?
-      console.log('Video is not saved', err) :
-      callback();
+    err ? callback(err) : callback();
+  })
+}
+
+const deleteVideo = (video, userId, callback) => {
+  const query = "DELETE FROM videos WHERE userId = ? AND id = ?;";
+  const values = [userId, video.id];
+
+  connection.query(query, values, (err, result) => {
+    err ? callback(err) : callback(null, result);
   })
 }
 
 //---------------------------------------------------------TIMESTAMP QUERIES
 //-------------------------------------------- GET REQUESTS
 const getTimestamp = (videoId, userId, callback) => {
-  const query = `SELECT timestamp, comment FROM timeStamps WHERE videoId = '${videoId}' AND userId = '${userId}' ORDER BY timestamp asc;`
+  const query = `SELECT timestamp FROM timeStamps WHERE videoId = '${videoId}' AND userId = '${userId}' ORDER BY timestamp asc;`
 
   connection.query(query, (err, results, fields) => {
     (err) ?
       console.error(err) :
-      console.log(results, 'results from db') 
       callback(results);
   })
 }
 const getOwnerTimestamp = (videoId, callback) => {
-  const query = `select timestamps.comment, timestamps.timestamp, users.name from timestamps inner join users on users.id = timestamps.userId WHERE timestamps.videoId = '${videoId}' ORDER BY timestamp asc;`;
+  const query = `SELECT timestamp, userId FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`;
 
   connection.query(query, (err, results, fields) => {
     (err) ?
@@ -138,8 +144,8 @@ const getOwnerTimestamp = (videoId, callback) => {
 
 
 //-------------------------------------------- POST REQUESTS
-const setTimestamp = ({userId, videoId, timestamp, comment}, callback) => {
-  const query = `INSERT INTO timeStamps (userId, videoId, timeStamp, comment) VALUES (${userId}, '${videoId}', ${timestamp}, '${comment}');`;
+const setTimestamp = ({userId, videoId, timestamp}, callback) => {
+  const query = `INSERT INTO timeStamps (userId, videoId, timeStamp) VALUES (${userId}, '${videoId}', ${timestamp});`;
 
   connection.query(query, (err, results, fields) => {
     (err) ?
@@ -163,6 +169,7 @@ exports.getBuckets = getBuckets;
 exports.getUser = getUser;
 exports.setUser = setUser;
 exports.setVideo = setVideo;
+exports.deleteVideo = deleteVideo;
 exports.setTimestamp = setTimestamp;
 exports.getUserId = getUserId;
 exports.getTimestamp = getTimestamp;

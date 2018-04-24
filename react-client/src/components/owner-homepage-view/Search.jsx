@@ -39,7 +39,9 @@ class Search extends React.Component {
             label="Search" 
             value="search"
             onClick={() => {
-              this.props.getVideos(this.state.userInput);
+              this.props.view === 'home' ? this.props.searchUserVideos(this.state.userInput) 
+              : this.props.getVideos(this.state.userInput);
+              this.setState({userInput: ''})
               this.refs['autocomplete'].setState({searchText:''});
             }} 
           />
