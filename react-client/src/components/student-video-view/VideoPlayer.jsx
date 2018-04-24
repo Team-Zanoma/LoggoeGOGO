@@ -4,6 +4,8 @@ import axios from 'axios';
 import YouTube from 'react-youtube';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
+import RadioButtonGroup from 'material-ui/RadioButton/RadioButtonGroup';
+import RadioButton from 'material-ui/RadioButton';
 
 class VideoPlayer extends React.Component {
   constructor(props) {
@@ -12,7 +14,8 @@ class VideoPlayer extends React.Component {
     this.state = { 
       videoId: this.props.videoId,
       player: null,
-      comment: ''
+      comment: '',
+      radioButtonValue: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -20,6 +23,17 @@ class VideoPlayer extends React.Component {
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
+    this.handleRadioButtonChange = this.handleRadioButtonChange.bind(this);
+  }
+
+  handleRadioButtonChange(event) {
+    this.setState({
+      radioButtonValue: event.target.value
+    })
+  }
+
+  handleChange(comment) {
+    this.setState({comment:comment});
   }
 
   handleChange(comment) {
@@ -42,7 +56,7 @@ class VideoPlayer extends React.Component {
 
   saveTimeStamp() {
     const timestamp = Math.floor(this.state.player.getCurrentTime());
-    this.props.saveTimeStamp(timestamp, this.state.comment);
+    this.props.saveTimeStamp(timestamp, this.state.comment, this.state.radioButtonValue);
   }
 
   render() {
@@ -56,7 +70,7 @@ class VideoPlayer extends React.Component {
     };
 
     return (
-      <div style={{display: 'block', margin: '20px'}}>
+      <div style={{display: 'block', margin: '15px'}}>
         <div>
           <YouTube
             videoId={this.state.videoId}
@@ -77,16 +91,36 @@ class VideoPlayer extends React.Component {
               style={{margin: '5px'}}/>
           </div>
           <label>
-            <h4 style={{display: 'inline'}}>Comment: </h4>
+            <h4 style={{display: 'inline'}}>Write a Comment: </h4>
             <AutoComplete 
               dataSource={[]} 
               refs={'autocomplete'}
               onUpdateInput={this.handleChange}
-              onNewRequest={this.saveTimeStamp}/>
+              onNewRequest={this.saveTimeStamp}
+              style = {{margin: '5px'}}/>
             <RaisedButton 
               onClick={this.saveTimeStamp} 
-              label="Confused" 
+              label="Submit" 
               style={{margin: '5px'}} />
+            <RadioButtonGroup onChange={this.handleRadioButtonChange} name="tags">
+              <RadioButton
+                value="unclear"
+                label="unclear"
+              />
+              <RadioButton
+                value="needs more examples"
+                label="needs more examples"
+              />
+              <RadioButton
+                value="too fast"
+                label="too fast"
+              />
+              <RadioButton
+                value="too slow"
+                label="too slow"
+              />
+            </RadioButtonGroup>
+    
           </label>
         </div>
       </div>

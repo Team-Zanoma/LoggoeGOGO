@@ -35,7 +35,7 @@ class StudentVideo extends React.Component {
          })
   }
 
-  saveTimeStamp(timestamp, comment) {
+  saveTimeStamp(timestamp, comment, radioButtonValue) {
     const user = this.state.userId;
     const videoId = this.props.location.videoId;
 
@@ -44,7 +44,8 @@ class StudentVideo extends React.Component {
         userId: user,
         videoId: this.props.location.videoId,
         timestamp: timestamp,
-        comment: comment
+        comment: comment,
+        radioButtonValue: radioButtonValue
       }
     })
     .then(() => {this.getAllTimestamps()})
