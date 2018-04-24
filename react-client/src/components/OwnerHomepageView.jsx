@@ -87,7 +87,6 @@ class OwnerHomepage extends React.Component {
   }
 
   searchUserVideos(query = '') {
-    console.log(query)
     if (query === '') this.getUserVideos(this.state.userId);
     query = query.toLowerCase();
     const matches = [];

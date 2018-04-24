@@ -45,7 +45,6 @@ class Search extends React.Component {
               this.refs['autocomplete'].setState({searchText:''});
             }} 
           />
-
         </div>
       </Paper>
     )
