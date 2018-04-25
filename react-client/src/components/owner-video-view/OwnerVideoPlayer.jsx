@@ -4,6 +4,7 @@ import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import YouTube from 'react-youtube';
 import Paper from 'material-ui/Paper';
+import Card, {CardText} from 'material-ui/Card';
 
 class OwnerVideoPlayer extends React.Component {
   constructor(props) {
@@ -42,10 +43,10 @@ class OwnerVideoPlayer extends React.Component {
   
   render() {
     const opts = {
-      height: '390',
-      width: '500',
+      height: '380px',
+      padding: '10px',
       playerVars: {
-        autoplay: 1,
+        autoplay: 0,
         start: this.props.startingTimestamp,
       }
     };
@@ -53,26 +54,26 @@ class OwnerVideoPlayer extends React.Component {
     return (
       <div>
         <div>
-          <YouTube
-            videoId={this.state.videoId}
-            opts={opts}
-            onReady={this.onReady}
-          />
+          <h2>Current Video</h2>
+          <Paper style={style1}>
+            <YouTube
+              videoId={this.state.videoId}
+              opts={opts}
+            />
+          </Paper>
         </div>
-        <div>
-          <RaisedButton 
-            style={{margin: '5px'}} 
-            onClick={this.onPlayVideo}  
-            label="Play"/>
-          <RaisedButton 
-            style={{margin: '5px'}} 
-            onClick={this.onPauseVideo} 
-            label="Pause"/>
-        </div>
+
       </div>
     );
   }
 }
+
+const style1 = {
+  width: '100%',
+  padding: '10px',
+  display: 'inline-block',
+};
+
 
 
 export default OwnerVideoPlayer;
