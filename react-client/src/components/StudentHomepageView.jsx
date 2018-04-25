@@ -52,12 +52,7 @@ class StudentHomepage extends React.Component {
       this.setState({videoList: matches})
     }
 
-    // componentDidMount() {
-    //   let recievedMessage = this.props.location.state.message;
-    // }
-
     render() {
-      // console.log(recievedMessage);
         return (
             <Paper style={style} zDepth={1}>
                 <div>
