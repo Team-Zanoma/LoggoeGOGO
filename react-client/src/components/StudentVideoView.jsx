@@ -95,7 +95,7 @@ class StudentVideo extends Component {
       <Paper style={style} zDepth={1}>
         <div>
           <div>
-            <Paper style={paperStyle1}>
+            <Paper>
               <VideoPlayer 
                 videoId={this.props.location.videoId} 
                 startingTimestamp={this.state.startingTimestamp}
@@ -120,7 +120,6 @@ class StudentVideo extends Component {
 const style = {
   height: '100%',
   width: '100%',
-  margin: '30px',
   textAlign: 'center',
   display: 'inline-block',
   padding: '30px',
@@ -128,14 +127,12 @@ const style = {
 }
 
 const paperStyle1 = {
-  margin: '20px', 
   padding: '20px', 
-  width: '60%', 
+  width: '100%', 
   float: 'left',
 }
 
 const paperStyle2 = {
-  margin: '20px', 
   padding: '20px', 
   width: '30%', 
   float: 'left',

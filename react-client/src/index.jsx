@@ -10,6 +10,8 @@ import StudentVideo from './components/StudentVideoView.jsx';
 import LandingPage from './components/LandingPageView.jsx';
 import OwnerVideo from './components/OwnerVideoView.jsx';
 
+import './c3.min.css';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
