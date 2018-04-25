@@ -76,6 +76,7 @@ const getBuckets = function({videoId, duration}, callback) {
   for (let i = 0; i < duration; i+=duration/10) {
     bucketFloors.push(Math.floor(i))
   }
+  
   connection.query(`select TimeStampGroup,
   count(*) as total
   from (

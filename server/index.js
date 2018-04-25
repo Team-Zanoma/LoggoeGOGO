@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const moment = require('moment');
 const axios = require('axios');
+const lodash = require('lodash');
 const {
   getOwnerTimestamp,
   getCurrentVideo,
@@ -122,7 +123,22 @@ app.get('/buckets', (req,res) => {
     data.sort(function (a, b) {
       return Number(a.TimeStampGroup.match(/\d+/)) - Number(b.TimeStampGroup.match(/\d+/));
     });
-    console.log(data)
+
+    const formatNumbers = (range) => {
+      var timeRange = [];
+      const timesArr = range.split('-');
+      timesArr.forEach(time => {
+        time = Number(time);
+        let minutes = Math.floor(time / 60);
+        let seconds = time - minutes * 60;
+        timeRange.push(String(minutes) + ':' + String(seconds));
+      })
+      return timeRange.join('-');
+    }
+
+    data.forEach(timeObj => {
+      timeObj.TimeStampGroup = formatNumbers(timeObj.TimeStampGroup.replace(/[+]/, ''));
+    })
     res.json(data)
   })
 })
