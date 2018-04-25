@@ -10,7 +10,33 @@ class OwnerTimeStamps extends React.Component {
 
   render() {
 
+    // create the list of timestamp items, then render the list
     return (
+      <div>
+        <h2>Timestamps</h2>
+        {this.props.timeStamps.map((timeStamp, i) => (
+          <Card style={{margin: '20px'}}>
+            <CardHeader 
+            style={{backgroundColor: 'grey'}}
+            title={'Time: ' + (timeStamp.timestamp / 60 | 0) + ':' + String(timeStamp.timestamp % 60).padStart(2, '0')} 
+            subtitle={'name: ' + timeStamp.name}/> 
+            <CardText>
+              <b>Comment:</b>&nbsp;{timeStamp.comment}
+              <br/>
+              <strong>Tag:</strong><Chip style={{display: 'inline', backgroundColor: '#999999', margin: '0 0 0 5px', color: 'white'}}>{timeStamp.tag ? timeStamp.tag : 'n/a'}</Chip>
+            </CardText>
+          </Card>
+        ))}
+      </div>   
+    )
+    
+  }
+}
+
+export default OwnerTimeStamps;
+
+/*
+return (
       <div>
         {this.props.timeStamps.map((timeStamp, i) => (
           <Card style={{margin: '20px'}}>
@@ -27,7 +53,4 @@ class OwnerTimeStamps extends React.Component {
         ))}
       </div>   
     )
-  }
-}
-
-export default OwnerTimeStamps;
+    */
