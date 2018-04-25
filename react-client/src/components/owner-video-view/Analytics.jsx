@@ -101,6 +101,7 @@ class Analytics extends React.Component {
     this.createChart(this.state.view);
     return (
       <div>
+        <h2>Analytics</h2>
       <RaisedButton label={this.state.view === 'chart' ? 'pie' : 'chart'} 
       onClick={() => {
         this.setState({view: this.state.view === 'chart' ? 'pie' : 'chart'});

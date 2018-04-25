@@ -30,54 +30,80 @@ class OwnerVideo extends React.Component {
 
   render() {
     return (
-      <Paper style={style} zDepth={1}>
-        <div style={{display: 'inline-block'}}>
-            <div style={style2}>
-              <Paper style={{padding: '20px'}}>
-                <div>
-                  {!!this.props.location.video && <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>}
-                </div>
-              </Paper>
-              <br/>
-              <Paper style={{padding: '20px'}}>
-                <div>
-                  {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video}/>}
-                </div>
-              </Paper>
+      <Paper>
+        <Paper style={style1}>
+          {!!this.props.location.video && <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>}
+        </Paper>
+        <Paper style={style2}>
+          {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video}/>}
+
+        </Paper>
+        <Paper style={style3}>
+            <div>
+              {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
             </div>
-            <Paper style={style3}>
-              <div>
-                {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
-              </div>
-            </Paper>
-        </div>  
+        </Paper>
       </Paper>
+
     )
   }
 }
 
-const style = {
+const style1 = {
   height: '100%',
   width: '100%',
-  margin: '30px',
-  textAlign: 'center',
+  margin: '10px',
+  textAlign: 'left',
   display: 'block',
   padding: '30px',
-  background: '#D8E4EA'
+  background: '#666699'
 }
 
 const style2 = {
-  width: '55%', 
-  float: 'left', 
-  margin: '20px',
+  height: '100%',
+  width: '100%',
+  margin: '10px',
+  textAlign: 'left',
+  display: 'block',
+  padding: '30px',
+  background: '#88CC88'
 }
 
 const style3 = {
-  width: '35%', 
-  float: 'left', 
-  textAlign: 'left', 
-  margin: '20px',
-  padding: '20px',
+  height: '100%',
+  width: '100%',
+  margin: '10px',
+  textAlign: 'left',
+  display: 'block',
+  padding: '30px',
+  background: '#EE6666'
 }
 
 export default withRouter(OwnerVideo);
+
+/*
+return (
+  <Paper style={style} zDepth={1}>
+    <div style={{display: 'inline-block'}}>
+        <div style={style2}>
+          <Paper style={{padding: '20px'}}>
+            <div>
+              {!!this.props.location.video && <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>}
+            </div>
+          </Paper>
+          <br/>
+          <Paper style={{padding: '20px'}}>
+            <div>
+              {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video}/>}
+            </div>
+          </Paper>
+        </div>
+        <Paper style={style3}>
+          <div>
+            {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
+          </div>
+        </Paper>
+    </div>  
+  </Paper>
+)
+*/
