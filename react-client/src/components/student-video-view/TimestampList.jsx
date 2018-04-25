@@ -12,6 +12,7 @@ class TimestampList extends React.Component {
   }
   
   render() {
+    console.log('timestampelist props are: ', this.props)
     return (
       <div>
         <div>

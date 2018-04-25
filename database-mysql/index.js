@@ -124,18 +124,19 @@ const deleteVideo = (video, userId, callback) => {
 //---------------------------------------------------------TIMESTAMP QUERIES
 //-------------------------------------------- GET REQUESTS
 const getTimestamp = (videoId, userId, callback) => {
-  const query = `SELECT timestamp FROM timeStamps WHERE videoId = '${videoId}' AND userId = '${userId}' ORDER BY timestamp asc;`
-
-  connection.query(query, (err, results, fields) => {
+  //const query = `SELECT timestamp, comment FROM timeStamps WHERE videoId = '${videoId}' AND userId = '${userId}' ORDER BY timestamp asc;`
+  const query2 = `select name, comment, tag, timestamp, userId from users left join timestamps on users.id = timestamps.userId where userId = ${userId};`;
+  connection.query(query2, (err, results, fields) => {
     (err) ?
       console.error(err) :
       callback(results);
   })
 }
-const getOwnerTimestamp = (videoId, callback) => {
-  const query = `SELECT timestamp, userId FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`;
 
-  connection.query(query, (err, results, fields) => {
+const getOwnerTimestamp = (videoId, callback) => {
+  //const query = `SELECT userId, timestamp, userId, comment, tag FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`;
+  const query2 = `select name, comment, tag, timestamp, userId from users left join timestamps on users.id = timestamps.userId where videoId = '${videoId}';`;
+  connection.query(query2, (err, results, fields) => {
     (err) ?
       console.error(err) :
       callback(results);

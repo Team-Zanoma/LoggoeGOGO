@@ -25,6 +25,7 @@ class StudentVideo extends React.Component {
   componentDidMount(){
     const videoId = this.props.location.videoId;
     this.getUserId(this.props.location.username); 
+    this.getAllTimestamps();
   }
 
   getUserId(user) {
@@ -75,7 +76,9 @@ class StudentVideo extends React.Component {
         userId: this.state.userId
       }
     })
-    .then((data) => (data.data.map((TS) => TS)))
+    .then((data) => { 
+      console.log('data in getalltimestamps() are:', data)
+      return data.data.map((TS) => TS)})
     .then((TS) => {this.setState({timestamps: TS})
     })
   }
@@ -85,6 +88,8 @@ class StudentVideo extends React.Component {
   }
   
   render() {    
+
+    console.log('studentvideoview this.state.timestamps are: ', this.state.timestamps);
     return (
       <Paper style={style} zDepth={1}>
         <div>

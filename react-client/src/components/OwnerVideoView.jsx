@@ -25,7 +25,11 @@ class OwnerVideo extends React.Component {
       .then((data) => {
         const timeStamps = data.data.sort((a, b)=> a.timestamp - b.timestamp)
         this.setState({timeStamps: timeStamps})
+
+        console.log('showTimestamps() is invoked and timeStamps are: ', this.state.timeStamps);
       })
+
+      
   }
 
   render() {
