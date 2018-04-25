@@ -1,0 +1,39 @@
+.videoBox {
+  padding: 20px;
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+}
+
+.radioContainer {
+  margin-top: 20px;
+}
+
+.RadioButtonGroup {
+  min-width: 550px;
+  max-width: 600px;
+  margin: 20px auto 0;
+}
+
+.commentBox {
+  padding-bottom: 20px;
+}
+.commentBox h4 {
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.RadioButtonGroup:after {
+  content: "";
+  clear: both;
+  display: table;
+}
