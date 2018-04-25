@@ -31,28 +31,3 @@ class OwnerTimeStamps extends React.Component {
 }
 
 export default OwnerTimeStamps;
-
-/*
-<div style={{display: 'inline-block'}}>
-                <h4 style={{display: 'inline'}}>Timestamp: </h4>{(timeStamp.timestamp / 60 | 0) + ':' + String(timeStamp.timestamp % 60).padStart(2, '0')}
-              </div>
-              <div style={{display: 'block'}}>
-                <h4 style={{display: 'inline'}}>Student: </h4>{timeStamp.name}
-              </div>
-              */
-
-
-              /*
-
-                      <div key={i} style={{padding: '20px', display: 'block'}}>
-              
-              <div style={{display: 'block'}}>
-              <h4 style={{display: 'inline'}}>Comment: </h4>{timeStamp.comment}
-              </div>
-              <div style={{display: 'block'}}>
-          
-                
-
-              </div>
-            </div>
-            */
