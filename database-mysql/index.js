@@ -1,9 +1,14 @@
 const mysql = require('mysql');
+const KEYS = require('../keys.js');
+
 const connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  database : 'oneTeam'
+  host     : KEYS.host,
+  user     : KEYS.user,
+  database : KEYS.database,
+  password : KEYS.password
 });
+
+console.log(KEYS.host)
 
 //---------------------------------------------------------USER QUERIES
 //-------------------------------------------- GET REQUESTS
