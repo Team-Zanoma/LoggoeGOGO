@@ -151,6 +151,12 @@ app.delete('/timestamps', (req, res) => {
   deleteTimestamp(params, (success) => {res.send()})
 })
 
+//---------------------------------------------------------CATCH ALL FOR REACT-ROUTER
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'react-client', 'dist', 'index.html'));
+});
+
 //---------------------------------------------------------SERVER
 
 app.listen(3000, () => {
