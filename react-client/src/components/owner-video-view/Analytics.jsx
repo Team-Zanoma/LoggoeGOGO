@@ -36,18 +36,17 @@ class Analytics extends React.Component {
 
   createChart() {
       const data = this.state.counts.slice();
-      console.log(this.state)
+
       const chart = c3.generate({
         data: {
-          x: 'x',
           columns: [
-            ['data', ...data],
-            ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05'],
+            ['data', ...data]
           ],
         },
         axis: {
             x: {
-                type: 'timeseries',
+                type: 'category',
+                categories: this.state.buckets
             }
         }
    });
