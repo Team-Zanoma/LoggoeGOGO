@@ -26,17 +26,17 @@ const AuthExample = () => (
   </Router>
 );
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100);
-  }
-};
+  const fakeAuth = {
+    isAuthenticated: false,
+    authenticate(cb) {
+      this.isAuthenticated = true;
+      setTimeout(cb, 100); // fake async
+    },
+    signout(cb) {
+      this.isAuthenticated = false;
+      setTimeout(cb, 100);
+    }
+  };
 
 const AuthButton = withRouter(
   ({ history }) =>
@@ -57,19 +57,10 @@ const AuthButton = withRouter(
 );
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      fakeAuth.isAuthenticated ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: props.location }
-          }}
-        />
-      )
+  <Route {...rest} render={
+    props => fakeAuth.isAuthenticated
+      ? (<Component {...props} />)
+      : (<Redirect to={{ pathname: "/login", state: { from: props.location } }} /> )
     }
   />
 );
