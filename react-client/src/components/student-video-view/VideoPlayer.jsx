@@ -1,21 +1,27 @@
 import React from 'react';
 import axios from 'axios';
 
-import YouTube from 'react-youtube';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import RadioButtonGroup from 'material-ui/RadioButton/RadioButtonGroup';
 import RadioButton from 'material-ui/RadioButton';
+
+import { Tabs, Tab } from 'material-ui/Tabs';
+import FontIcon from 'material-ui/FontIcon';
+import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
+
+import VideoPlayerComponent from '../VideoPlayerComponent.jsx';
+import './VideoPlayer.css';
 
 class VideoPlayer extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = { 
-      videoId: this.props.videoId,
       player: null,
       comment: '',
       radioButtonValue: 'unclear',
+      windowSize: window.innerWidth
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,23 +33,15 @@ class VideoPlayer extends React.Component {
   }
 
   handleRadioButtonChange(event) {
-    this.setState({
-      radioButtonValue: event.target.value
-    })
+    this.setState({ radioButtonValue: event.target.value });
   }
 
   handleChange(comment) {
-    this.setState({comment:comment});
-  }
-
-  handleChange(comment) {
-    this.setState({comment:comment});
+    this.setState({ comment:comment });
   }
 
   onReady(event) {
-    this.setState({
-      player: event.target,
-    });
+    this.setState({ player: event.target });
   }
   
   onPlayVideo() {
@@ -59,72 +57,75 @@ class VideoPlayer extends React.Component {
     this.props.saveTimeStamp(timestamp, this.state.comment, this.state.radioButtonValue);
   }
 
-  render() {
+  handleWindowResize = () => {
+    this.setState({ windowSize: window.innerWidth });
+  }
 
-    console.log('props for student view are: ', this.props);
-    
-    const opts = {
-      height: '390',
-      width: '500',
-      playerVars: {
-        autoplay: 1,
-        start: this.props.startingTimestamp,
+  componentDidMount() {
+    window.addEventListener('resize', this.handleWindowResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize);
+  }
+
+  render() {
+    const tagsNames = [
+      { value: "Unclear" },
+      { value: "More Examples" },
+      { value: "Too Fast" },
+      { value: "Too Slow" }
+    ];
+
+    const longLabel = (val) => {
+      const style = { width: '23%', display: 'inline-block' };
+
+      if (val !== "More Examples") {
+        return style;
+      } else {
+        style.width = '31%';
+        return style;
       }
     };
-
+    const displayRadios = tagsNames.map(
+      ({ value }, idx) => (
+        <RadioButton
+          key={ idx }
+          value={ value }
+          label={ value }
+          style={ longLabel(value) }
+        />
+      )
+    );
     return (
-      <div style={{display: 'block', margin: '15px'}}>
-        <div>
-          <YouTube
-            videoId={this.state.videoId}
-            opts={opts}
-            onReady={this.onReady}
-          />
+      <div>
+        <div className="videoBox">
+          <VideoPlayerComponent videoId={ this.props.videoId } />
         </div>
-        <br/>
-        <div>
-          <div>
-            <RaisedButton 
-              onClick={this.onPlayVideo} 
-              label="Play" 
-              style={{margin: '5px'}}/>
-            <RaisedButton 
-              onClick={this.onPauseVideo} 
-              label="Pause" 
-              style={{margin: '5px'}}/>
-          </div>
+        <div className="commentBox">
           <label>
-            <h4 style={{display: 'inline'}}>Write a Comment: </h4>
+            <h4>Write a Comment:</h4>
             <AutoComplete 
               dataSource={[]} 
-              refs={'autocomplete'}
-              onUpdateInput={this.handleChange}
-              onNewRequest={this.saveTimeStamp}
-              style = {{margin: '5px'}}/>
+              refs={ 'autocomplete' }
+              onUpdateInput={ this.handleChange }
+              onNewRequest={ this.saveTimeStamp }
+              style={{margin: '5px'}}
+            />
             <RaisedButton 
               onClick={this.saveTimeStamp} 
               label="Submit" 
-              style={{margin: '5px'}} />
-            <RadioButtonGroup onChange={this.handleRadioButtonChange} name="tags" defaultSelected="unclear">
-              <RadioButton
-                value="unclear"
-                label="unclear"
-              />
-              <RadioButton
-                value="needs more examples"
-                label="needs more examples"
-              />
-              <RadioButton
-                value="too fast"
-                label="too fast"
-              />
-              <RadioButton
-                value="too slow"
-                label="too slow"
-              />
-            </RadioButtonGroup>
-    
+              style={{margin: '5px'}}
+            />    
           </label>
+          <RadioButtonGroup
+            onChange={ this.handleRadioButtonChange }
+            name="tags"
+            defaultSelected="unclear"
+            className="RadioButtonGroup"
+          >
+            { displayRadios }
+          </RadioButtonGroup>
         </div>
       </div>
     );

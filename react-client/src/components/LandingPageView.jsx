@@ -54,7 +54,6 @@ class LandingPage extends React.Component {
   }
 
   render () {
-    console.log('landing page: ', this.props.data)
     return (
       <Paper style={paperStyle} zDepth={1}>
 
