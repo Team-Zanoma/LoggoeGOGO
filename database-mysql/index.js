@@ -131,7 +131,7 @@ const deleteVideo = (video, userId, callback) => {
 //-------------------------------------------- GET REQUESTS
 const getTimestamp = (videoId, userId, callback) => {
   //const query = `SELECT timestamp, comment FROM timeStamps WHERE videoId = '${videoId}' AND userId = '${userId}' ORDER BY timestamp asc;`
-  const query2 = `select name, comment, tag, timestamp, userId from users left join timestamps on users.id = timestamps.userId where userId = '${userId}';`;
+  const query2 = `select name, comment, tag, timestamp, userId from users left join timeStamps on users.id = timeStamps.userId where userId = '${userId}';`;
   connection.query(query2, (err, results, fields) => {
     (err) ?
       console.error(err) :
@@ -141,7 +141,7 @@ const getTimestamp = (videoId, userId, callback) => {
 
 const getOwnerTimestamp = (videoId, callback) => {
   //const query = `SELECT userId, timestamp, userId, comment, tag FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`;
-  const query2 = `select name, comment, tag, timestamp, userId from users left join timestamps on users.id = timestamps.userId where videoId = '${videoId}';`;
+  const query2 = `select name, comment, tag, timestamp, userId from users left join timeStamps on users.id = timeStamps.userId where videoId = '${videoId}';`;
   connection.query(query2, (err, results, fields) => {
     (err) ?
       console.error(err) :
@@ -153,7 +153,7 @@ const getOwnerTimestamp = (videoId, callback) => {
 //-------------------------------------------- POST REQUESTS
 const setTimestamp = ({userId, videoId, timestamp, comment, radioButtonValue}, callback) => {
   const query = `INSERT INTO timeStamps (userId, videoId, timeStamp, comment, tag) VALUES (${userId}, '${videoId}', ${timestamp}, '${comment}', '${radioButtonValue}');`;
-
+  
   connection.query(query, (err, results, fields) => {
     (err) ?
       console.error(err) :
