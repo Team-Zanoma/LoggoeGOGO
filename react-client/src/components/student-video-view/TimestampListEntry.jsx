@@ -1,6 +1,7 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import moment from 'moment';
 
 class TimestampListEntry extends React.Component {
   constructor(props) {
@@ -19,21 +20,23 @@ class TimestampListEntry extends React.Component {
   }
   
   render() {
-
-    console.log('TimestampListEntry props are: ', this.props)
+    const {timestamp, view} = this.props;
     return (
       <Paper style={style}>
         <div>
-          <h4 style={{display: 'inline'}}>Timestamp: </h4> 
-          {(this.props.timestamp.timestamp / 60 | 0) + ':' + String(this.props.timestamp.timestamp % 60).padStart(2, '0')}
+          <h4 style={{display: 'inline'}}>{ view === 'timestamps' ? 'Timestamp' : timestamp.username + ':'} </h4> 
+          { view === 'timestamps' ? (timestamp.timestamp / 60 | 0) + ':' + String(timestamp.timestamp % 60).padStart(2, '0')
+            : ''
+          }
         </div>
         <div>
-          <h4 style={{display: 'inline'}}>Comment: </h4> 
-          {this.props.timestamp.comment}
+          <h4 style={{display: 'inline'}}>{ view === 'timestamps' ? 'Comment:' : ''} </h4> 
+          {view === 'timestamps' ? timestamp.comment : timestamp.message }
         </div>
+        <span><i>{moment().fromNow()}</i></span>
         <div>
-          <button onClick={this.onChangeVideo}>Watch This Clip</button>
-          <button onClick={this.onDeleteTimestamp}>X</button>
+          {view === 'timestamps' ? <button onClick={this.onChangeVideo}>Watch This Clip</button> : ''}
+          {view === 'timestamps' ? <button onClick={this.onDeleteTimestamp}>X</button> : ''}
         </div>
       </Paper>
       );

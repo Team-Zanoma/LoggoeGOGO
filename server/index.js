@@ -4,6 +4,9 @@ const express = require('express');
 const moment = require('moment');
 const axios = require('axios');
 const lodash = require('lodash');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 const {
   getOwnerTimestamp,
   getCurrentVideo,
@@ -23,7 +26,6 @@ const {
 const searchYouTube = require ('youtube-search-api-with-axios');
 const api = require('../config.js').API;
 
-const app = express();
 
 //---------------------------------------------------------MIDDLEWARE
 
@@ -174,8 +176,32 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../react-client/dist/index.html`));
 });
 
+//---------------------------------------------------------Socket.io
+
+io.on('connection', (socket) => {
+  console.log('user connected!');
+
+  socket.on('message', (message) => {
+    socket.broadcast.emit('message', message);
+  })
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected!');
+  })
+})
+
+
 //---------------------------------------------------------SERVER
 
-app.listen(3000, () => {
+server.listen(3000, () => {
   console.log('listening on port 3000!');
 });
+
+
+
+
+
+
+
+
+
