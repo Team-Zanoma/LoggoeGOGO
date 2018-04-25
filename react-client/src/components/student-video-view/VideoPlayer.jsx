@@ -15,7 +15,7 @@ class VideoPlayer extends React.Component {
       videoId: this.props.videoId,
       player: null,
       comment: '',
-      radioButtonValue: '',
+      radioButtonValue: 'unclear',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -60,6 +60,9 @@ class VideoPlayer extends React.Component {
   }
 
   render() {
+
+    console.log('props for student view are: ', this.props);
+    
     const opts = {
       height: '390',
       width: '500',
@@ -102,7 +105,7 @@ class VideoPlayer extends React.Component {
               onClick={this.saveTimeStamp} 
               label="Submit" 
               style={{margin: '5px'}} />
-            <RadioButtonGroup onChange={this.handleRadioButtonChange} name="tags">
+            <RadioButtonGroup onChange={this.handleRadioButtonChange} name="tags" defaultSelected="unclear">
               <RadioButton
                 value="unclear"
                 label="unclear"

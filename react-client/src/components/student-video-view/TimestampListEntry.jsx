@@ -19,6 +19,8 @@ class TimestampListEntry extends React.Component {
   }
   
   render() {
+
+    console.log('TimestampListEntry props are: ', this.props)
     return (
       <Paper style={style}>
         <div>
