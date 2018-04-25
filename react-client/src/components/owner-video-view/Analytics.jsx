@@ -14,11 +14,9 @@ class Analytics extends React.Component {
     this.createChart=this.createChart.bind(this);
   }
 
-
   componentDidMount() {
     this.getBuckets();
   }
-
 
   getBuckets() {
     axios.get('/buckets', {
@@ -29,15 +27,11 @@ class Analytics extends React.Component {
     })
     .then((data) => {
       this.setState({
-        buckets: 
-        data.data.map((row) => (row.TimeStampGroup)),
-        counts: 
-        data.data.map((row) => (row.total))
+        buckets: data.data.map((row) => row.TimeStampGroup),
+        counts: data.data.map((row) => row.total)
       })
     })
   }
-
-  
 
   createChart() {
       const data = this.state.counts.slice();
@@ -46,27 +40,20 @@ class Analytics extends React.Component {
       const chart = c3.generate({
         bindto: '#chart',
         data: {
-            columns: [
-                data
-           ],
-           type: 'bar'
-       },
-       axis: {
-         x: {
-           type: 'category',
-           categories: this.state.buckets
+          columns: [data],
+          type: 'bar'
+        },
+        axis: {
+          x: {
+            type: 'category',
+            categories: this.state.buckets
           }
         },
-       bar: {
-           width: {
-               ratio: 1
-            }
-       }
+        bar: {
+          width: {ratio: 1}
+        }
    });
   }
-
-
-  //
   
   render() {
     {this.createChart()}

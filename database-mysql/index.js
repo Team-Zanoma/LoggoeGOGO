@@ -108,9 +108,16 @@ const setVideo = (video, userId, duration, callback) => {
   const values = [video.id.videoId, video.snippet.title, video.snippet.description, video.snippet.thumbnails.default.url, userId, duration];
 
   connection.query(query, values, (err, result) => {
-    (err) ?
-      console.log('Video is not saved', err) :
-      callback();
+    err ? callback(err) : callback();
+  })
+}
+
+const deleteVideo = (video, userId, callback) => {
+  const query = "DELETE FROM videos WHERE userId = ? AND id = ?;";
+  const values = [userId, video.id];
+
+  connection.query(query, values, (err, result) => {
+    err ? callback(err) : callback(null, result);
   })
 }
 
@@ -137,8 +144,8 @@ const getOwnerTimestamp = (videoId, callback) => {
 
 
 //-------------------------------------------- POST REQUESTS
-const setTimestamp = ({userId, videoId, timestamp}, callback) => {
-  const query = `INSERT INTO timeStamps (userId, videoId, timeStamp) VALUES (${userId}, '${videoId}', ${timestamp});`;
+const setTimestamp = ({userId, videoId, timestamp, comment, radioButtonValue}, callback) => {
+  const query = `INSERT INTO timeStamps (userId, videoId, timeStamp, comment, tag) VALUES (${userId}, '${videoId}', ${timestamp}, '${comment}', '${radioButtonValue}');`;
 
   connection.query(query, (err, results, fields) => {
     (err) ?
@@ -162,6 +169,7 @@ exports.getBuckets = getBuckets;
 exports.getUser = getUser;
 exports.setUser = setUser;
 exports.setVideo = setVideo;
+exports.deleteVideo = deleteVideo;
 exports.setTimestamp = setTimestamp;
 exports.getUserId = getUserId;
 exports.getTimestamp = getTimestamp;

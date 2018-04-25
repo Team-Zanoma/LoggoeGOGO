@@ -1,12 +1,13 @@
 DROP DATABASE IF EXISTS oneTeam;
 CREATE DATABASE oneTeam;
 USE oneTeam;
-CREATE TABLE timeStamps (
+CREATE TABLE timeStamps ( 
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   videoId varchar(255) NOT NULL,
   userId INT NOT NULL,
   timeStamp INT(11) NOT NULL,
-  comment varchar(255)
+  comment varchar(255),
+  tag varchar(40)
 );
 CREATE TABLE users (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -22,6 +23,7 @@ CREATE TABLE videos (
   userId INT(11) NOT NULL,
   duration INT(11)
 );
+
 INSERT INTO timeStamps (videoId, userId, timeStamp, comment) VALUES ('ZK3O402wf1c', 2, 132, 'hello so confused.');
 INSERT IGNORE INTO users (name, owner) VALUES ('Jun Yoo', true);
 INSERT IGNORE INTO users (name, owner) VALUES ('Brian', false);

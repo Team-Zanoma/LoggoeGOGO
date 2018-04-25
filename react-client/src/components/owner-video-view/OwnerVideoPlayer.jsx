@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
+import RaisedButton from 'material-ui/RaisedButton';
 import YouTube from 'react-youtube';
+import Paper from 'material-ui/Paper';
 
 class OwnerVideoPlayer extends React.Component {
   constructor(props) {
@@ -37,12 +39,12 @@ class OwnerVideoPlayer extends React.Component {
     const timestamp = Math.floor(this.state.player.getCurrentTime());
     this.props.saveTimeStamp(timestamp);
   }
-
+  
   render() {
     const opts = {
       height: '390',
-      width: '640',
-      playerVars: { // https://developers.google.com/youtube/player_parameters
+      width: '500',
+      playerVars: {
         autoplay: 1,
         start: this.props.startingTimestamp,
       }
@@ -50,19 +52,27 @@ class OwnerVideoPlayer extends React.Component {
 
     return (
       <div>
-        <YouTube
-          videoId={this.state.videoId}
-          opts={opts}
-          onReady={this.onReady}
-        />
-        <button onClick={this.onPlayVideo}>Play</button>
-        <button onClick={this.onPauseVideo}>Pause</button>
-        {/* <button onClick={this.onChangeVideo}>Change Video</button> */}
-        {/* <button onClick={this.saveTimeStamp}>Confused</button> */}
+        <div>
+          <YouTube
+            videoId={this.state.videoId}
+            opts={opts}
+            onReady={this.onReady}
+          />
+        </div>
+        <div>
+          <RaisedButton 
+            style={{margin: '5px'}} 
+            onClick={this.onPlayVideo}  
+            label="Play"/>
+          <RaisedButton 
+            style={{margin: '5px'}} 
+            onClick={this.onPauseVideo} 
+            label="Pause"/>
+        </div>
       </div>
     );
   }
-
 }
+
 
 export default OwnerVideoPlayer;
