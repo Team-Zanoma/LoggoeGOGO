@@ -135,7 +135,7 @@ class StudentVideo extends Component {
           </div>
           <div>
             <Paper style={paperStyle2}>
-              <RaisedButton label={this.state.view} 
+              <RaisedButton label={this.state.view === 'timestamps' ? 'chat' : 'timestamps'} 
               onClick={() => {
                 this.changeView();
               }}/>
