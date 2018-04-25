@@ -83,7 +83,6 @@ app.get('/owner/search', (req, res) => {
   searchYouTube({key: api, q: req.query.query, maxResults: 10}, 
     (video) => {
       res.status(200).send(video)
-      //get duration
     });
 });
 
@@ -123,6 +122,7 @@ app.get('/buckets', (req,res) => {
     data.sort(function (a, b) {
       return Number(a.TimeStampGroup.match(/\d+/)) - Number(b.TimeStampGroup.match(/\d+/));
     });
+    console.log(data)
     res.json(data)
   })
 })
