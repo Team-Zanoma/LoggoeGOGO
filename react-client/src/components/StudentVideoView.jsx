@@ -1,13 +1,12 @@
 import ReactDOM from 'react-dom';
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import $ from 'jquery';
 
 import VideoPlayer from './student-video-view/VideoPlayer.jsx'
 import TimestampList from './student-video-view/TimestampList.jsx'
 import Paper from 'material-ui/Paper';
 
-class StudentVideo extends React.Component {
+class StudentVideo extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -29,11 +28,14 @@ class StudentVideo extends React.Component {
   }
 
   getUserId(user) {
-    axios.get('/user/id', {params: {user: user}})
-         .then((data) => {
-           this.setState({userId: data.data[0].id})
-           this.getAllTimestamps();
-         })
+    axios.get('/user/id', {
+      params: { user }
+    })
+      .then((data) => {
+        this.setState({userId: data.data[0].id})
+        this.getAllTimestamps();
+      }
+    );
   }
 
   saveTimeStamp(timestamp, comment, radioButtonValue) {
@@ -49,7 +51,7 @@ class StudentVideo extends React.Component {
         radioButtonValue: radioButtonValue
       }
     })
-    .then(() => {this.getAllTimestamps()})
+    .then(() => { this.getAllTimestamps() })
   }
 
   deleteTimestamp(timestamp) {
@@ -63,8 +65,8 @@ class StudentVideo extends React.Component {
         timestamp: timestamp
       }
     })
-    .then(() => {this.getAllTimestamps()})
-    .then(this.setState({startingTimestamp: this.state.timestamps[0]})) 
+    .then(() => { this.getAllTimestamps() })
+    .then(this.setState({ startingTimestamp: this.state.timestamps[0] })) 
   }
 
   getAllTimestamps() {
@@ -88,7 +90,6 @@ class StudentVideo extends React.Component {
   }
   
   render() {    
-
     console.log('studentvideoview this.state.timestamps are: ', this.state.timestamps);
     return (
       <Paper style={style} zDepth={1}>
