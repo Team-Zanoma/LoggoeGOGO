@@ -10,8 +10,10 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
 
-import VideoPlayerComponent from '../VideoPlayerComponent.jsx';
+import VideoPlayerComponent from '../VideoPlayerComponent/VideoPlayerComponent.jsx';
 import './VideoPlayer.css';
+
+import YouTube from 'react-youtube';
 
 class VideoPlayer extends React.Component {
   constructor(props) {
@@ -21,7 +23,8 @@ class VideoPlayer extends React.Component {
       player: null,
       comment: '',
       radioButtonValue: 'unclear',
-      windowSize: window.innerWidth
+      windowSize: window.innerWidth,
+      videoId: this.props.videoId
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -97,9 +100,13 @@ class VideoPlayer extends React.Component {
         />
       )
     );
+
+    const opts = { height: '390', width: '500', playerVars: { autoplay: 1, start: this.props.startingTimestamp, } };
+    
     return (
       <div>
         <div className="videoBox">
+          <YouTube videoId={this.state.videoId} opts={opts} onReady={this.onReady} />
           <VideoPlayerComponent videoId={ this.props.videoId } />
         </div>
         <div className="commentBox">

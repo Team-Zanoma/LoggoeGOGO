@@ -2,7 +2,7 @@ import React from 'react';
 import Chip from 'material-ui/Chip';
 import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
-import VideoPlayerComponent from '../VideoPlayerComponent.jsx';
+import VideoPlayerComponent from '../VideoPlayerComponent/VideoPlayerComponent.jsx';
 
 class OwnerTimeStamps extends React.Component {
   constructor(props) {
