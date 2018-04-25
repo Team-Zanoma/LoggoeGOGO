@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import c3 from 'c3';
+import 'c3/c3.css';
 
 class Analytics extends React.Component {
   constructor(props) {
@@ -10,8 +11,8 @@ class Analytics extends React.Component {
       buckets: [],
       counts: []
     };
-    this.getBuckets=this.getBuckets.bind(this);
-    this.createChart=this.createChart.bind(this);
+    this.getBuckets = this.getBuckets.bind(this);
+    this.createChart = this.createChart.bind(this);
   }
 
   componentDidMount() {
@@ -35,28 +36,28 @@ class Analytics extends React.Component {
 
   createChart() {
       const data = this.state.counts.slice();
-      data.unshift('buckets')
-
+      console.log(this.state)
       const chart = c3.generate({
-        bindto: '#chart',
         data: {
-          columns: [data],
-          type: 'bar'
+          x: 'x',
+          columns: [
+            ['data', ...data],
+            ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
+          ],
         },
         axis: {
-          x: {
-            type: 'category',
-            categories: this.state.buckets
-          }
-        },
-        bar: {
-          width: {ratio: 1}
+            x: {
+                type: 'timeseries',
+                tick: {
+                    centered: true
+                }
+            }
         }
    });
   }
   
   render() {
-    {this.createChart()}
+    this.createChart();
     return (
       <div id="chart">
       </div>
