@@ -162,7 +162,10 @@ app.get('/timestamps/owner', (req, res) => {
 app.post('/timestamps', (req, res) => {
   let params = req.body.params;
   console.log(params)
-  setTimestamp(params, (success) => {res.status(201).send()});
+  setTimestamp(params, (success) => {
+    console.log(success)
+    res.status(201).send()
+  });
 })
 
 app.delete('/timestamps', (req, res) => {
