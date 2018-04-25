@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const path = require('path');
 const express = require('express');
 const moment = require('moment');
 const axios = require('axios');
@@ -154,7 +155,7 @@ app.delete('/timestamps', (req, res) => {
 //---------------------------------------------------------CATCH ALL FOR REACT-ROUTER
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'react-client', 'dist', 'index.html'));
+  res.sendFile(path.resolve(`${__dirname}/../react-client/dist/index.html`));
 });
 
 //---------------------------------------------------------SERVER

@@ -11,7 +11,7 @@ import StudentVideo from './components/StudentVideoView.jsx';
 import LandingPage from './components/LandingPageView.jsx';
 import OwnerVideo from './components/OwnerVideoView.jsx';
 
-import AuthButton from './AuthButton.js';
+// import AuthExample from './AuthExample.js';
 import fakeAuth from './utils/fakeAuth.js';
 import './App.css';
 
