@@ -22,14 +22,10 @@ class OwnerVideo extends React.Component {
 
   showTimestamps() {
     axios.get('/timestamps/owner', {params: {videoId: this.props.location.video.videoId}})
-      .then((data) => {
-        const timeStamps = data.data.sort((a, b)=> a.timestamp - b.timestamp)
-        this.setState({timeStamps: timeStamps})
-
-        console.log('showTimestamps() is invoked and timeStamps are: ', this.state.timeStamps);
-      })
-
-      
+    .then((data) => {
+      const timeStamps = data.data.sort((a, b)=> a.timestamp - b.timestamp)
+      this.setState({timeStamps: timeStamps})
+    })
   }
 
   render() {
@@ -49,7 +45,6 @@ class OwnerVideo extends React.Component {
                 </div>
               </Paper>
             </div>
-
             <Paper style={style3}>
               <div>
                 {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
