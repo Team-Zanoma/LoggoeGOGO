@@ -1,13 +1,7 @@
+const keys = require('./config.js');
 module.exports = {
-  host     : process.env.host || 'gogo.ccfxjg2eeut1.us-east-1.rds.amazonaws.com',
-  user     : process.env.user || 'pedrobarquinha',
-  database : process.env.database || 'gogo',
-  password: process.env.password || 'gogo1234567'
+  host     : process.env.host || keys.host,
+  user     : process.env.user || keys.user,
+  database : process.env.database || keys.database,
+  password: process.env.password || keys.password
 }
-
-// module.exports = {
-//   host     : process.env.host || 'localhost',
-//   user     : process.env.user || 'root',
-//   database : process.env.database || 'oneTeam',
-//   password: process.env.password || ''
-// }
