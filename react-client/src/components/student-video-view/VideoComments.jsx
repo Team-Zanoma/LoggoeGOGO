@@ -7,7 +7,7 @@ import RadioButton from 'material-ui/RadioButton';
 
 import { Tabs, Tab } from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
-import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
+import SwipeableViews from 'react-swipeable-views';
 
 import './VideoComments.css';
 
@@ -20,9 +20,11 @@ class VideoComments extends Component {
       comment: '',
       radioButtonValue: 'unclear',
       windowSize: window.innerWidth,
+      slideIndex: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleTabChange = this.handleTabChange.bind(this);
     this.sendCommentDetails = this.sendCommentDetails.bind(this);
     this.handleRadioButtonChange = this.handleRadioButtonChange.bind(this);
   }
@@ -30,6 +32,11 @@ class VideoComments extends Component {
   handleRadioButtonChange(event) {
     this.setState({ radioButtonValue: event.target.value });
   }
+
+  handleTabChange(value) {
+    this.setState({ slideIndex: value });
+  };
+
 
   handleChange(comment) {
     this.setState({ comment });
@@ -82,35 +89,61 @@ class VideoComments extends Component {
     );
 
     return (
-      <div className="commentBox">
-        <label>
-          <h4>Write a Comment:</h4>
-          <AutoComplete 
-            id='comments'
-            dataSource={[]} 
-            refs={ 'autocomplete' }
-            onUpdateInput={ this.handleChange }
-            onNewRequest={ this.sendCommentDetails }
-            style={{margin: '5px'}}
-          />
-          <RaisedButton 
-            onClick={ this.sendCommentDetails } 
-            label="Submit" 
-            style={{margin: '5px'}}
-          />    
-        </label>
-        <RadioButtonGroup
-          onChange={ this.handleRadioButtonChange }
-          name="tags"
-          defaultSelected="unclear"
-          className="RadioButtonGroup"
+      <div>
+        <Tabs
+          onChange={ this.handleTabChange }
+          value={ this.state.slideIndex }
         >
-          { displayRadios }
-        </RadioButtonGroup>
+          <Tab
+            label="Comment"
+            icon={<FontIcon className="material-icons">mode_comment</FontIcon>}
+            value={ 0 }
+          />
+          <Tab
+            label="Notes"
+            icon={<FontIcon className="material-icons">mode_edit</FontIcon>}
+            value={ 1 }
+          />
+        </Tabs>
+        <SwipeableViews
+          index={ this.state.slideIndex }
+          onChangeIndex={ this.handleTabChange }
+        >
+          <div>
+            <div className="commentBox">
+              <label className="inputLabel">
+                <h3>Write a Comment:</h3>
+                <AutoComplete 
+                  id='comments'
+                  dataSource={[]} 
+                  refs={ 'autocomplete' }
+                  onUpdateInput={ this.handleChange }
+                  onNewRequest={ this.sendCommentDetails }
+                  style={{margin: '5px'}}
+                />
+                <RaisedButton 
+                  onClick={ this.sendCommentDetails } 
+                  label="Submit" 
+                  style={{margin: '5px', width: '90px'}}
+                />    
+              </label>
+              <RadioButtonGroup
+                onChange={ this.handleRadioButtonChange }
+                name="tags"
+                defaultSelected="unclear"
+                className="RadioButtonGroup"
+              >
+                { displayRadios }
+              </RadioButtonGroup>
+            </div>
+          </div>
+          <div className="slide">
+            slide n°2
+          </div>
+        </SwipeableViews>
       </div>
     );
   }
-
 }
 
 export default VideoComments;

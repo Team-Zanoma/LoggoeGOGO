@@ -99,18 +99,6 @@ button {
   background-color: #eee;
 }
 
-button:focus {
-  background: darken(#eee, 5);
-}
-
-button:hover {
-  background: darken(#eee, 10);
-}
-
-button:active {
-  background: darken(#eee, 15);
-}
-
 [type=range] {
   -webkit-appearance:none;
   margin: 6px 0;
@@ -123,14 +111,17 @@ button:active {
 
 [type=range]:focus::-webkit-slider-runnable-track {
   background: #e1e1e1;
+  background: transparent;
 }
 
 [type=range]:focus::-ms-fill-lower {
   background: #eee;
+  background: transparent;
 }
 
 [type=range]:focus::-ms-fill-upper {
   background: #e1e1e1;
+  background: transparent;
 }
 
 [type=range]::-webkit-slider-runnable-track {
@@ -139,14 +130,18 @@ button:active {
   transition: all .2s ease;
   width: 100%;
   box-shadow: 0 0 0 #222, 0 0 0 #2f2f2f;
+  box-shadow: none;
   background: #eee;
+  background: transparent;
   border: 0 solid #000;
   border-radius: 5px;
 }
 
 [type=range]::-webkit-slider-thumb {
   box-shadow: 0 0 0 #111, 0 0 0 #1e1e1e;
+  box-shadow: none;
   background: #666;
+  background: transparent;
   border: 0 solid #fff;
   border-radius: 12px;
   cursor: pointer;
@@ -162,7 +157,9 @@ button:active {
   transition: all .2s ease;
   width: 100%;
   box-shadow: 0 0 0 #222, 0 0 0 #2f2f2f;
+  box-shadow: none;
   background: #eee;
+  background: transparent;
   border: 0 solid #000;
   border-radius: 5px;
 }
@@ -170,6 +167,8 @@ button:active {
 [type=range]::-moz-range-thumb {
   box-shadow: 0 0 0 #111, 0 0 0 #1e1e1e;
   background: #666;
+  box-shadow: none;
+  background: transparent;
   border: 0 solid #fff;
   border-radius: 12px;
   cursor: pointer;
@@ -190,21 +189,26 @@ button:active {
 
 [type=range]::-ms-fill-lower {
   background: #fbfbfb;
+  background: transparent;
 }
 
 [type=range]::-ms-fill-lower, [type=range]::-ms-fill-upper {
   box-shadow: 0 0 0 #222, 0 0 0 #2f2f2f;
+  box-shadow: none;
   border: 0 solid #000;
   border-radius: 10px;
 }
 
 [type=range]::-ms-fill-upper {
   background: #eee;
+  background: transparent;
 }
 
 [type=range]::-ms-thumb {
   box-shadow: 0 0 0 #111, 0 0 0 #1e1e1e;
+  box-shadow: none;
   background: #666;
+  background: transparent;
   border: 0 solid #fff;
   border-radius: 12px;
   cursor: pointer;
@@ -242,33 +246,105 @@ button:active {
   left: 0;
 }
 
+*, *:before, *:after { -webkit-box-sizing: inherit; -moz-box-sizing: inherit; box-sizing: inherit; }
+
+.controllBar {
+  position: relative;
+  width: 100%;
+  background-color: #ff4081 !important;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.controllBar div {
+  float: left;
+}
+
+.controllBar div:last-of-type {
+  float: right;
+}
+
+.controllBar .scrubber {
+  padding: 0 5px;
+  width: 100%;
+}
+
+.controllBar .scrubber .container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, .25);
+  border-radius: 3px;
+}
+
+.controllBar div button:last-of-type {
+  margin: 0;
+}
+
+.controllBar:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.controllBar button {
+  background-color: rgba(255, 255, 255, .25);
+  color: #fff;
+  transition: all .3s ease;
+  margin: 0 5px 0 0;
+  padding: 6px 12px;
+  max-width: 42px;
+}
+
+.controllBar button:hover {
+  background-color: rgba(255, 255, 255, .5);
+}
+
+.controllBar button .material-icons {
+  color: #fff !important;
+  font-size: 18px !important;
+}
+
+.controllBar button.iconOn {
+  background-color: #00bcd4 !important;
+}
 
 
 
+.seeker {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  margin: 0;
+  z-index: 3;
+  background: transparent;
+}
 
 progress[value] {
 	appearance: none;
 	border: none;
 	width: 100%;
-	height: 20px;
-	background-color: #f5f5f5;
+	height: 100%;
+	/* background-color: #f5f5f5; */
+  background-color: transparent;
 	border-radius: 3px;
-	/* box-shadow: 0 2px 3px rgba(0, 0, 0, .5) inset; */
-	position: relative;
-	margin: 0 0 1.5em;
+	position: absolute;
+	margin: 0;
 }
 
 progress[value]::-webkit-progress-bar {
-	background-color: #f5f5f5;
+	/* background-color: #f5f5f5; */
+  background-color: transparent;
 	border-radius: 3px;
 }
 
 progress[value]::-webkit-progress-value {
 	position: relative;
-	border-radius:3px;
+	border-radius: 3px;
 }
 
-progress[value]::-webkit-progress-value:after {
+/* progress[value]::-webkit-progress-value:after {
 	content: '';
 	position: absolute;
 	width:5px;
@@ -277,25 +353,33 @@ progress[value]::-webkit-progress-value:after {
 	right:7px;
 	background-color: #fff;
 	border-radius: 100%;
+} */
+
+progress[value].position {
+  z-index: 2;
+}
+
+progress[value].loaded{
+  z-index: 1;
 }
 
 progress[value]::-moz-progress-bar {
-	background-color: red;
-	border-radius:3px;
+	background-color: rgba(0, 188, 212, .25);
+	border-radius: 3px;
 }
 
 .position::-webkit-progress-value {
-	background-color: #09c;
+	background-color: rgba(0, 188, 212, .75);
 }
 
 .position::-moz-progress-bar {
-	background-color: #09c;
+	background-color: rgba(0, 188, 212, 1);
 }
 
 .loaded::-webkit-progress-value {
-	background-color: red;
+	background-color: rgba(255, 255, 255, .5);
 }
 
 .loaded::-moz-progress-bar {
-	background-color: red;
+	background-color: rgba(0, 188, 212, .5);
 }
