@@ -21,6 +21,8 @@ const {
   setUser,
   getBuckets,
   deleteTimestamp, 
+  addChatMessage,
+  getAllMessages
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -173,6 +175,15 @@ app.delete('/timestamps', (req, res) => {
   deleteTimestamp(params, (success) => {res.send()})
 })
 
+//---------------------------------------------------------GET MESSAGES
+
+app.post('/chatMessages', (req, res) => {
+  const {videoId} = req.body;
+  getAllMessages(videoId, (err, result) => {
+    err ? res.send(err) : res.send(result);
+  })
+})
+
 //---------------------------------------------------------CATCH ALL FOR REACT-ROUTER
 
 app.get('*', (req, res) => {
@@ -186,13 +197,15 @@ io.on('connection', (socket) => {
 
   socket.on('message', (message) => {
     socket.broadcast.emit('message', message);
+    addChatMessage(message.message, message.room, (err, res) => {
+      err ? console.log(err) : console.log('added!');
+    });
   })
 
   socket.on('disconnect', () => {
     console.log('user disconnected!');
   })
 })
-
 
 //---------------------------------------------------------SERVER
 
