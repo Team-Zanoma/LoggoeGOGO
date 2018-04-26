@@ -9,7 +9,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
 
-import './VideoComments.css';
+import './VideoComment.css';
 
 class VideoComments extends Component {
   constructor(props) {

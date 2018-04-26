@@ -4,7 +4,6 @@ import screenfull from 'screenfull';
 import ReactPlayer from 'react-player';
 
 import './VideoPlayerComponent.css';
-// import './VideoComment.css';
 
 class VideoPlayerComponent extends Component {
   constructor(props) {
