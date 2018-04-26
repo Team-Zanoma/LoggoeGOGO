@@ -19,8 +19,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
   }
-// <LandingPage exact path="/" component={LandingPage}/>
-// <Tester exact path="/" component={Tester}/>
   render () {
     return (
       <MuiThemeProvider>
