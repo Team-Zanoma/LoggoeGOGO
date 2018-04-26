@@ -36,6 +36,7 @@ class VideoComments extends Component {
   }
 
   sendCommentDetails() {
+    // console.log(this.state.comment, this.state.radioButtonValue)
     this.props.getCommentDetails(this.state.comment, this.state.radioButtonValue);
   }
 
@@ -92,7 +93,7 @@ class VideoComments extends Component {
             style={{margin: '5px'}}
           />
           <RaisedButton 
-            onClick={ this.saveTimeStamp } 
+            onClick={ this.sendCommentDetails } 
             label="Submit" 
             style={{margin: '5px'}}
           />    
