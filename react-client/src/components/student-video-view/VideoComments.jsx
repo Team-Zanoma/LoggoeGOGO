@@ -9,7 +9,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
 
-import './VideoComment.css';
+import './VideoComments.css';
 
 class VideoComments extends Component {
   constructor(props) {
@@ -36,7 +36,6 @@ class VideoComments extends Component {
   }
 
   sendCommentDetails() {
-    const timestamp = Math.floor(this.state.player.getCurrentTime());
     this.props.getCommentDetails(this.state.comment, this.state.radioButtonValue);
   }
 
