@@ -4,7 +4,7 @@ import screenfull from 'screenfull';
 import ReactPlayer from 'react-player';
 
 import './VideoPlayerComponent.css';
-// import './VideoComment.css';
+import VideoComments from '../student-video-view/VideoComments.jsx';
 
 class VideoPlayerComponent extends Component {
   constructor(props) {
@@ -77,7 +77,10 @@ class VideoPlayerComponent extends Component {
     screenfull.request(findDOMNode(this.player));
 	}
 
-	// componentDidMount() {}
+  getCommentDetails = (comment, radioValue) => {
+    // console.log(this.state.playedSeconds, comment, radioValue)
+    this.props.saveComment(this.state.playedSeconds, comment, radioValue)
+  }
 
   render () {
     const { url, playing, volume, muted, loop, played, loaded, duration, playbackRate } = this.state;
@@ -139,6 +142,9 @@ class VideoPlayerComponent extends Component {
               <td><progress className="loaded" max={1} value={loaded} /></td>
             </tr>
           </tbody></table>
+        </section>
+        <section className="section">
+          <VideoComments getCommentDetails={ this.getCommentDetails } />
         </section>
       </div>
     );

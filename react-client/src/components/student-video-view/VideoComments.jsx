@@ -36,7 +36,10 @@ class VideoComments extends Component {
   }
 
   sendCommentDetails() {
+<<<<<<< HEAD
     const timestamp = Math.floor(this.state.player.getCurrentTime());
+=======
+>>>>>>> youtubeSkin
     this.props.getCommentDetails(this.state.comment, this.state.radioButtonValue);
   }
 
