@@ -8,8 +8,7 @@ class VideoPlayer extends Component {
   }
 
   saveTimeStamp(timestamp, comment, radioValue) {
-    console.log('from the video player container: ', timestamp, comment, radioValue);
-    // this.props.saveTimeStamp(timestamp, comment, radioValue);
+    this.props.saveTimeStamp(timestamp, comment, radioValue);
   }
 
   render() {

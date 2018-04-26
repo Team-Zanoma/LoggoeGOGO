@@ -77,9 +77,13 @@ class VideoPlayerComponent extends Component {
     screenfull.request(findDOMNode(this.player));
 	}
 
+  ref = player => {
+    this.player = player
+  }
+
   getCommentDetails = (comment, radioValue) => {
-    // console.log(this.state.playedSeconds, comment, radioValue)
-    this.props.saveComment(this.state.playedSeconds, comment, radioValue)
+    const timestamp = Math.floor(this.state.playedSeconds);
+    this.props.saveComment(timestamp, comment, radioValue);
   }
 
   render () {
@@ -89,6 +93,7 @@ class VideoPlayerComponent extends Component {
         <section className='section'>
           <div className='player-wrapper'>
             <ReactPlayer
+              ref={this.ref}
               className='react-player'
               width='100%'
               height='100%'
