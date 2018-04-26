@@ -40,6 +40,10 @@ class Analytics extends React.Component {
     })
   }
 
+  getChatMessages() {
+    
+  }
+
   arrangeTags() {
     const tags = {};
 

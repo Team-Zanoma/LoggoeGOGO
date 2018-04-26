@@ -21,6 +21,16 @@ class OwnerVideoPlayer extends React.Component {
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
   }
 
+  componentDidMount() {
+    axios.post('/chatMessages', {videoId: this.props.videoId})
+    .then(analytics => {
+      console.log(analytics);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
   onReady(event) {
     this.setState({
       player: event.target,

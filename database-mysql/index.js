@@ -171,6 +171,24 @@ const deleteTimestamp = ({userId, videoId, timestamp}, callback) => {
       callback(results);
   })
 }
+
+//--------------------------------------------- CHAT STORAGE
+
+const addChatMessage = (body, videoId, callback) => {
+  const query = `INSERT INTO chat (body, video_id) VALUES (?, (select id from videos where videoId = ?));`;
+  const value = [body, videoId];
+  connection.query(query, value, (err, result) => {
+    err ? callback(err) : callback(null, result);
+  })
+}
+
+const getAllMessages = (videoId, callback) => {
+  const query = `SELECT body FROM chat WHERE video_id = (select id from videos where videoId = ?);`;
+  const value = [videoId];
+  connection.query(query, value, (err, result) => {
+    err ? callback(err) : callback(null, result);
+  })
+}
   
 exports.getBuckets = getBuckets;
 exports.getUser = getUser;
@@ -185,3 +203,5 @@ exports.getOwnerVideos = getOwnerVideos;
 exports.getCurrentVideo = getCurrentVideo;
 exports.getOwnerTimestamp = getOwnerTimestamp;
 exports.deleteTimestamp = deleteTimestamp;
+exports.addChatMessage = addChatMessage;
+exports.getAllMessages = getAllMessages;
