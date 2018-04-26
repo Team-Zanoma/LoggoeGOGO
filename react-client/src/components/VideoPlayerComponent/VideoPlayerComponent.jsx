@@ -14,7 +14,6 @@ class VideoPlayerComponent extends Component {
     super(props);
     this.state = {
       url: `http://www.youtube.com/watch?v=${ props.videoId }`,
-      playing: false,
       volume: 0.8,
       muted: false,
       played: 0,
@@ -44,10 +43,6 @@ class VideoPlayerComponent extends Component {
 
   toggleMuted = () => {
     this.setState({ muted: !this.state.muted });
-  }
-
-  onPlay = () => {
-    this.setState({ playing: true });
   }
 
   autoPlay = () => {
@@ -163,7 +158,9 @@ class VideoPlayerComponent extends Component {
   componentDidMount() {
     if (this.props.hasController) {
       this.getScrubberSize();
-      this.autoPlay();
+      this.setState({ playing: true });
+    } else {
+      this.setState({ playing: false });
     }
     window.addEventListener('resize', this.getScrubberSize);
   }
