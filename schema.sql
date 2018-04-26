@@ -24,6 +24,14 @@ CREATE TABLE videos (
   duration INT(11)
 );
 
+CREATE TABLE chat (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  body varchar(255) NOT NULL,
+  video_id INT(20) NOT NULL,
+  addedAt DATETIME NOT NULL DEFAULT NOW(),
+  FOREIGN KEY(video_id) REFERENCES videos(id)
+);
+
 INSERT INTO timeStamps (videoId, userId, timeStamp, comment) VALUES ('ZK3O402wf1c', 2, 132, 'hello so confused.');
 INSERT IGNORE INTO users (name, owner) VALUES ('Jun Yoo', true);
 INSERT IGNORE INTO users (name, owner) VALUES ('Brian', false);
