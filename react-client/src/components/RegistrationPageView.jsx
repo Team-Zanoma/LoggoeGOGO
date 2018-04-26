@@ -69,6 +69,7 @@ class Registration extends React.Component {
       <Paper style={paperStyle}>
 
           <AutoComplete 
+            id='newUsername'
             style={inputStyle} 
             dataSource={[]}
             ref={'autocomplete'}

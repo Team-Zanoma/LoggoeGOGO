@@ -40,9 +40,9 @@ class OwnerHomepage extends React.Component {
 
   getUserId(user) {
     axios.get('/user/id', {params: {user: user}})
-         .then((data) => {
-           this.setState({userId: data.data[0].id}, ()=> this.getUserVideos(data.data[0].id));
-         })
+    .then((data) => {
+      this.setState({userId: data.data[0].id}, ()=> this.getUserVideos(data.data[0].id));
+    })
   }
 
   getUserVideos(userId) {

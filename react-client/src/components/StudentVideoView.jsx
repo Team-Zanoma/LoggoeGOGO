@@ -41,6 +41,7 @@ class StudentVideo extends Component {
       params: { user }
     })
       .then((data) => {
+        console.log(data.data[0].id)
         this.setState({userId: data.data[0].id})
         this.getAllTimestamps();
       }
@@ -121,7 +122,9 @@ class StudentVideo extends Component {
     this.setState({userInput: e.target.value})
   }
   
-  render() {    
+  render() {  
+    console.log('studentvideoview state is: ', this.state.userId);
+
     return (
       <Paper style={style} zDepth={1}>
         <div>
@@ -146,7 +149,7 @@ class StudentVideo extends Component {
               view={this.state.view}
               />
               {this.state.view === 'chat' ? 
-              <TextField placeHolder="message" value={this.state.userInput} 
+              <TextField id='message' placeHolder="message" value={this.state.userInput} 
               onChange={(e) => {
                 this.handleUserInput(e);
               }}

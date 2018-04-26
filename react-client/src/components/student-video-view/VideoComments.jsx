@@ -86,6 +86,7 @@ class VideoComments extends Component {
         <label>
           <h4>Write a Comment:</h4>
           <AutoComplete 
+            id='comments'
             dataSource={[]} 
             refs={ 'autocomplete' }
             onUpdateInput={ this.handleChange }

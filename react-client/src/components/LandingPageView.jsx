@@ -60,6 +60,7 @@ class LandingPage extends React.Component {
           <h3> Team Loggoe GoGo App </h3>
 
           <AutoComplete 
+            id='username'
             dataSource={[]} 
             hintText="Username"
             ref={'autocomplete'}

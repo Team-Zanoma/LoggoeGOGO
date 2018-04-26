@@ -14,6 +14,7 @@ class StudentHomepage extends React.Component {
         this.state = {
             query: '',
             videoList: [],
+            userId: ''
         }
         this.sendToSelectedVideo = this.sendToSelectedVideo.bind(this);
         this.searchUserVideos = this.searchUserVideos.bind(this);
@@ -36,6 +37,13 @@ class StudentHomepage extends React.Component {
           })
     }
 
+    getUserId(user) {
+      axios.get('/user/id', {params: {user: user}})
+      .then((data) => {
+        this.setState({userId: data.data[0].id});
+      })
+    }
+
     searchUserVideos(query) {
       if (query === '') {
         this.getVideos();
@@ -55,16 +63,19 @@ class StudentHomepage extends React.Component {
     render() {
         return (
             <Paper style={style} zDepth={1}>
-                <div>
-                    <Paper 
-                        style={searchStyle} 
-                        zDepth={1}>  
-                        <Search view="home" searchUserVideos={this.searchUserVideos} getVideos={() => {}}/>
-                    </Paper>
-                    <VideoList 
-                        videos={this.state.videoList} 
-                        redirect={this.sendToSelectedVideo}/>
-                </div>
+              <div>
+                <Paper 
+                    style={searchStyle} 
+                    zDepth={1}
+                >  
+                    <Search view="home" searchUserVideos={this.searchUserVideos} getVideos={() => {}}/>
+                </Paper>
+                <VideoList 
+                    videos={this.state.videoList} 
+                    redirect={this.sendToSelectedVideo}
+                    sendUserId={this.state.userId}
+                />
+              </div>
             </Paper>
           )
     }
