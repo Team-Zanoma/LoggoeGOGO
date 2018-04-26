@@ -1,3 +1,27 @@
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialicons/v36/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+
 .radioContainer {
   margin-top: 20px;
 }
@@ -5,19 +29,31 @@
 .RadioButtonGroup {
   min-width: 550px;
   max-width: 600px;
-  margin: 20px auto 0;
+  margin: 10px auto 0;
 }
 
 .commentBox {
-  padding-bottom: 20px;
+  padding: 20px;
 }
-.commentBox h4 {
+
+.commentBox .inputLabel {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.commentBox h3 {
   display: inline-block;
   padding-right: 10px;
+  width: 116px;
 }
 
 .RadioButtonGroup:after {
   content: "";
   clear: both;
   display: table;
+}
+
+.commentBox .slide {
+  padding:  10px;
 }

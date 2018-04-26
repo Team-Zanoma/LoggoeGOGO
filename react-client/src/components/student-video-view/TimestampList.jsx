@@ -15,13 +15,15 @@ class TimestampList extends React.Component {
       <div>
         <div>
           {this.props.timestamps.map((timestamp, index) => {
-            return <TimestampListEntry 
-                    key={index} 
-                    timestamp={timestamp} 
-                    changeVideo={this.props.changeVideo} 
-                    deleteTimestamp={this.props.deleteTimestamp}
-                    view={this.props.view}
-                    />
+            return (
+              <TimestampListEntry 
+                key={index} 
+                timestamp={timestamp} 
+                changeVideo={this.props.changeVideo} 
+                deleteTimestamp={this.props.deleteTimestamp}
+                view={this.props.view}
+              />
+            );
           })}
         </div>
       </div>

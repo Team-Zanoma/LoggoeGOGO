@@ -12,10 +12,12 @@ class VideoPlayer extends Component {
   }
 
   render() {
+    const testId = this.props.videoId || 'ZK3O402wf1c';
     return (
       <VideoPlayerComponent
-        videoId={ this.props.videoId }
+        videoId={ testId }
         hasComments={ true }
+        hasController={ true }
         saveComment={ this.saveTimeStamp }
       />
     );
