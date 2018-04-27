@@ -27,6 +27,8 @@ const {
 
 const searchYouTube = require ('youtube-search-api-with-axios');
 const api = require('../config.js').API;
+const azureAPI = require('../config.js').azureAPI;
+const chalk = require('chalk');
 
 
 //---------------------------------------------------------MIDDLEWARE
@@ -180,6 +182,19 @@ app.delete('/timestamps', (req, res) => {
 app.post('/chatMessages', (req, res) => {
   const {videoId} = req.body;
   getAllMessages(videoId, (err, result) => {
+
+    let azureString = result.reduce((accum, curr) => {return accum + '. ' + curr.body}, '');
+
+    //make api call to azure
+    let url = 'https://eastus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment';
+    let params = {
+      headers: {"Ocp-Apim-Subscription-Key": azureAPI},
+      documents: [{id: 1, text: azureString}]
+    }
+
+    axios.post(url, params)
+    .then((result) => console.log('api result is: ', result))
+    .catch(error => console.log(error))
     err ? res.send(err) : res.send(result);
   })
 })
