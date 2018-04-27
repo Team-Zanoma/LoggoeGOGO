@@ -20,23 +20,21 @@ class TimestampListEntry extends React.Component {
   }
   
   render() {
-    const {timestamp, view} = this.props;
+    const { timestamp } = this.props;
+
     return (
       <Paper style={style}>
         <div>
-          <h4 style={{display: 'inline'}}>{ view === 'timestamps' ? 'Timestamp' : timestamp.username + ':'} </h4> 
-          { view === 'timestamps' ? (timestamp.timestamp / 60 | 0) + ':' + String(timestamp.timestamp % 60).padStart(2, '0')
-            : ''
-          }
+          <h4 style={{display: 'inline'}}> Timestamp: </h4> 
+          { (timestamp.timestamp / 60 | 0) + ':' + String(timestamp.timestamp % 60).padStart(2, '0') }
         </div>
         <div>
-          <h4 style={{display: 'inline'}}>{ view === 'timestamps' ? 'Comment:' : ''} </h4> 
-          {view === 'timestamps' ? timestamp.comment : timestamp.message }
+          <h4 style={{display: 'inline'}}> timestamps </h4> 
+          { timestamp.comment }
         </div>
-        <span><i>{moment().fromNow()}</i></span>
         <div>
-          {view === 'timestamps' ? <button onClick={this.onChangeVideo}>Watch This Clip</button> : ''}
-          {view === 'timestamps' ? <button onClick={this.onDeleteTimestamp}>X</button> : ''}
+          <button onClick={this.onChangeVideo}>Watch This Clip</button>
+          <button onClick={this.onDeleteTimestamp}>X</button>
         </div>
       </Paper>
       );

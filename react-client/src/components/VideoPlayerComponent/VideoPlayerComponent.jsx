@@ -64,26 +64,26 @@ class VideoPlayerComponent extends Component {
   onSeekMouseUp = e => {
     this.setState({ seeking: false });
     this.player.seekTo(parseFloat(e.target.value));
-	}
+  }
 
   onProgress = state => {
     // We only want to update time slider if we are not currently seeking
     if (!this.state.seeking) {
       this.setState(state);
     }
-	}
+  }
 
   onEnded = () => {
     this.setState({ playing: this.state.loop });
-	}
+  }
 
   onDuration = (duration) => {
     this.setState({ duration });
-	}
+  }
 
   onClickFullscreen = () => {
     screenfull.request(findDOMNode(this.player));
-	}
+  }
 
   ref = player => {
     this.player = player

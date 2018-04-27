@@ -21,7 +21,6 @@ class TimestampList extends React.Component {
                 timestamp={timestamp} 
                 changeVideo={this.props.changeVideo} 
                 deleteTimestamp={this.props.deleteTimestamp}
-                view={this.props.view}
               />
             );
           })}

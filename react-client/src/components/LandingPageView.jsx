@@ -61,10 +61,7 @@ class LandingPage extends React.Component {
 
           <AutoComplete 
             id='username'
-<<<<<<< HEAD
-=======
             name='username'
->>>>>>> fixed several bugs relateding to React and Material-Ui
             dataSource={[]} 
             hintText="Username"
             ref={'autocomplete'}
