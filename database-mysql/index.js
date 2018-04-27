@@ -8,7 +8,6 @@ const connection = mysql.createConnection({
   password : KEYS.password
 });
 
-console.log(KEYS.host)
 
 //---------------------------------------------------------USER QUERIES
 //-------------------------------------------- GET REQUESTS
