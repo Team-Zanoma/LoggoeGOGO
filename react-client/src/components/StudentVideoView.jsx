@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 
-import VideoPlayer from './student-video-view/VideoPlayer.jsx';
-import TimestampList from './student-video-view/TimestampList.jsx';
+import VideoPlayer from './student-video-view/VideoPlayer.jsx'
+import TimestampList from './student-video-view/TimestampList.jsx'
+import ChatList from './student-video-view/ChatList.jsx';
 
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -124,7 +125,7 @@ class StudentVideo extends Component {
   handleTabChange(value) {
     this.setState({
       slideIndex: value,
-      // view: this.state.view === 'timestamps' ? 'chat' : 'timestamps'
+      view: this.state.view === 'timestamps' ? 'chat' : 'timestamps'
     });
   };
 
@@ -133,8 +134,6 @@ class StudentVideo extends Component {
   }
   
   render() {  
-    console.log('studentvideoview state is: ', this.state.userId);
-
     return (
       <Paper style={ mainPaper } zDepth={1}>
         <div className="StudentVideoView">
@@ -167,7 +166,7 @@ class StudentVideo extends Component {
             >
               <div className="slide">
                 <TimestampList 
-                  timestamps={this.state.view === 'timestamps' ? this.state.timestamps : this.state.messages} 
+                  timestamps={this.state.timestamps} 
                   deleteTimestamp={this.deleteTimestamp}
                   changeVideo={this.changeVideo}
                   view={this.state.view}
@@ -187,6 +186,7 @@ class StudentVideo extends Component {
                     this.setState({userInput: ''});
                   }}
                 />
+                <ChatList messages={this.state.messages}/>
               </div>
             </SwipeableViews>
           </Paper>

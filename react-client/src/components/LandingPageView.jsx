@@ -61,6 +61,7 @@ class LandingPage extends React.Component {
 
           <AutoComplete 
             id='username'
+            name='username'
             dataSource={[]} 
             hintText="Username"
             ref={'autocomplete'}

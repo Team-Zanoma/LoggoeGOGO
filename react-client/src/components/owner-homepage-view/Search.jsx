@@ -29,7 +29,8 @@ class Search extends React.Component {
       <Paper style={style} zDepth={1}>
         <div id="owner-homepage-search-bar">
           <AutoComplete 
-            id='search'
+            name='autocomplete'
+            id='autocomplete'
             dataSource={[]} 
             type="text"
             ref={'autocomplete'}

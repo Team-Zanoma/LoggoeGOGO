@@ -2,9 +2,11 @@ import React from 'react';
 import axios from 'axios';
 
 import RaisedButton from 'material-ui/RaisedButton';
-import YouTube from 'react-youtube';
+import Snackbar from 'material-ui/Snackbar';
 import Paper from 'material-ui/Paper';
 import Card, {CardText} from 'material-ui/Card';
+
+import YouTube from 'react-youtube';
 
 class OwnerVideoPlayer extends React.Component {
   constructor(props) {
@@ -12,23 +14,16 @@ class OwnerVideoPlayer extends React.Component {
 
     this.state = { 
       videoId: this.props.videoId,
-      player: null
+      player: null,
+      open: false
     };
 
     this.onReady = this.onReady.bind(this);
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
-  }
-
-  componentDidMount() {
-    axios.post('/chatMessages', {videoId: this.props.videoId})
-    .then(analytics => {
-      console.log(analytics);
-    })
-    .catch(err => {
-      console.log(err);
-    })
+    this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.handleRequestOpen = this.handleRequestOpen.bind(this);
   }
 
   onReady(event) {
@@ -51,9 +46,22 @@ class OwnerVideoPlayer extends React.Component {
     this.props.saveTimeStamp(timestamp);
   }
   
+  handleRequestClose() {
+    this.setState({
+      open: false
+    })
+  }
+
+  handleRequestOpen() {
+    this.setState({
+      open: true
+    })
+  }
+
   render() {
-    const opts = {
-      height: '380px',
+    const options = {
+      height: '200px',
+      width: '265px',
       padding: '10px',
       playerVars: {
         autoplay: 0,
@@ -64,15 +72,21 @@ class OwnerVideoPlayer extends React.Component {
     return (
       <div>
         <div>
-          <h2>Current Video</h2>
+          <h2 onClick={this.handleRequestOpen} >Current Video</h2>
           <Paper style={style1}>
             <YouTube
               videoId={this.state.videoId}
-              opts={opts}
+              opts={options}
             />
           </Paper>
         </div>
-
+          <Snackbar
+            open={this.state.open}
+            style={{textAlign: 'center'}}
+            message="Comment Added To Database"
+            autoHideDuration={2000}
+            onRequestClose={this.handleRequestClose}
+          />
       </div>
     );
   }
