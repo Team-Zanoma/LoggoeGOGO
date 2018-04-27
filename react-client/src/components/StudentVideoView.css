@@ -1,0 +1,9 @@
+.StudentVideoView .slide {
+	padding:  10px;
+}
+
+.slide:after {
+  content: "";
+  clear: both;
+  display: table;
+}

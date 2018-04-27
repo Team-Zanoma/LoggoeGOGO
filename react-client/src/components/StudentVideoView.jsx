@@ -14,6 +14,8 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import SwipeableViews from 'react-swipeable-views';
 
+import './StudentVideoView.css';
+
 class StudentVideo extends Component {
   constructor(props) {
     super(props);
@@ -135,7 +137,7 @@ class StudentVideo extends Component {
 
     return (
       <Paper style={ mainPaper } zDepth={1}>
-        <div>
+        <div className="StudentVideoView">
           <Paper style={ videoPaper }>
             <VideoPlayer 
               videoId={ this.props.location.videoId } 
@@ -163,7 +165,7 @@ class StudentVideo extends Component {
               index={ this.state.slideIndex }
               onChangeIndex={ this.handleTabChange }
             >
-              <div style={ styles.slide }>
+              <div className="slide">
                 <TimestampList 
                   timestamps={this.state.view === 'timestamps' ? this.state.timestamps : this.state.messages} 
                   deleteTimestamp={this.deleteTimestamp}
@@ -171,7 +173,7 @@ class StudentVideo extends Component {
                   view={this.state.view}
                 />
               </div>
-              <div style={ styles.slide }>
+              <div className="slide">
                 <TextField
                   id='message'
                   placeholder="message"
@@ -195,12 +197,6 @@ class StudentVideo extends Component {
 }
 
 const styles = {
-  headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400,
-  },
   slide: {
     padding: 10,
   },
