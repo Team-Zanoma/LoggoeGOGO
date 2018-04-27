@@ -138,7 +138,22 @@ class VideoComments extends Component {
             </div>
           </div>
           <div className="slide">
-            slide n°2
+            <label className="inputLabel">
+              <h3>Write a Note:</h3>
+              <AutoComplete 
+                id='comments'
+                dataSource={[]} 
+                refs={ 'autocomplete' }
+                onUpdateInput={ this.handleChange }
+                onNewRequest={ this.sendCommentDetails }
+                style={{margin: '5px'}}
+              />
+              <RaisedButton 
+                onClick={ this.sendCommentDetails } 
+                label="Submit" 
+                style={{margin: '5px', width: '90px'}}
+              />    
+            </label>
           </div>
         </SwipeableViews>
       </div>
