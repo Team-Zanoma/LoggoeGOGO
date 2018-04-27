@@ -41,8 +41,7 @@ class StudentVideo extends Component {
       params: { user }
     })
       .then((data) => {
-        console.log(data.data[0].id)
-        this.setState({userId: data.data[0].id})
+        this.setState({ userId: data.data[0].id || 2 })
         this.getAllTimestamps();
       }
     );
@@ -121,55 +120,64 @@ class StudentVideo extends Component {
   handleUserInput(e) {
     this.setState({userInput: e.target.value})
   }
+
+  showSidebar = () => {
+    if (this.state.view === 'chat') {
+      return (
+        <div>
+          <TextField
+            id='message'
+            placeHolder="message"
+            value={ this.state.userInput }
+            onChange={ (e) => this.handleUserInput(e) }
+          />
+          <RaisedButton
+            label="submit"
+            onClick={ () => {
+              this.sendMessage(this.state.userInput);
+              this.setState({userInput: ''});
+            }}
+          />
+        </div>
+      );
+    }
+    return (
+      <TimestampList 
+        timestamps={this.state.view === 'timestamps' ? this.state.timestamps : this.state.messages} 
+        deleteTimestamp={this.deleteTimestamp}
+        changeVideo={this.changeVideo}
+        view={this.state.view}
+      />
+    );
+  }
   
   render() {  
     console.log('studentvideoview state is: ', this.state.userId);
 
     return (
-      <Paper style={style} zDepth={1}>
+      <Paper style={ mainPaper } zDepth={1}>
         <div>
-          <div>
-            <Paper>
-              <VideoPlayer 
-                videoId={this.props.location.videoId} 
-                startingTimestamp={this.state.startingTimestamp}
-                saveTimeStamp={this.saveTimeStamp}/>
-            </Paper>
-          </div>
-          <div>
-            <Paper style={paperStyle2}>
-              <RaisedButton label={this.state.view === 'timestamps' ? 'chat' : 'timestamps'} 
-              onClick={() => {
-                this.changeView();
-              }}/>
-              <TimestampList 
-              timestamps={this.state.view === 'timestamps' ? this.state.timestamps : this.state.messages} 
-              deleteTimestamp={this.deleteTimestamp}
-              changeVideo={this.changeVideo}
-              view={this.state.view}
-              />
-              {this.state.view === 'chat' ? 
-              <TextField id='message' placeHolder="message" value={this.state.userInput} 
-              onChange={(e) => {
-                this.handleUserInput(e);
-              }}
-              /> : ''}
-              {this.state.view === 'chat' ? <RaisedButton label="submit" 
-              onClick={() => {
-                this.sendMessage(this.state.userInput);
-                this.setState({userInput: ''});
-              }}
-              /> : ''}
-            </Paper>
-          </div>
+          <Paper style={ videoPaper }>
+            <VideoPlayer 
+              videoId={ this.props.location.videoId } 
+              startingTimestamp={ this.state.startingTimestamp }
+              saveTimeStamp={ this.saveTimeStamp }
+            />
+          </Paper>
+          <Paper style={ sideBarPaper }>
+            <RaisedButton
+              label={this.state.view === 'timestamps' ? 'chat' : 'timestamps'} 
+              onClick={ () => this.changeView() }
+            />
+            { this.showSidebar() }
+          </Paper>
         </div>
       </Paper>
     )
   }
 }
 
-
-const style = {
+const mainPaper = {
   height: '100%',
   width: '100%',
   textAlign: 'center',
@@ -178,16 +186,14 @@ const style = {
   background: '#D8E4EA',
 }
 
-const paperStyle1 = {
-  padding: '20px', 
-  width: '100%', 
+const videoPaper = {
+  width: 'calc(70% - 10px)', 
   float: 'left',
 }
 
-const paperStyle2 = {
-  padding: '20px', 
-  width: '30%', 
-  float: 'left',
+const sideBarPaper = {
+  width: 'calc(30% - 10px)', 
+  float: 'right',
 }
 
 
