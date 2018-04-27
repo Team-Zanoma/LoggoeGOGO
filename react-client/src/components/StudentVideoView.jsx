@@ -3,11 +3,16 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 
-import VideoPlayer from './student-video-view/VideoPlayer.jsx'
-import TimestampList from './student-video-view/TimestampList.jsx'
+import VideoPlayer from './student-video-view/VideoPlayer.jsx';
+import TimestampList from './student-video-view/TimestampList.jsx';
+
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+
+import { Tabs, Tab } from 'material-ui/Tabs';
+import FontIcon from 'material-ui/FontIcon';
+import SwipeableViews from 'react-swipeable-views';
 
 class StudentVideo extends Component {
   constructor(props) {
@@ -18,13 +23,15 @@ class StudentVideo extends Component {
       userId: '',
       view: 'timestamps',
       messages: [],
-      userInput: ''
+      userInput: '',
+      slideIndex: 0,
     }
 
     this.getAllTimestamps = this.getAllTimestamps.bind(this);
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
     this.deleteTimestamp = this.deleteTimestamp.bind(this);
     this.changeVideo = this.changeVideo.bind(this);
+    this.handleTabChange = this.handleTabChange.bind(this);
 
     this.socket = io.connect();
     this.socket.on('message', (message) => this.getMessage(message));
@@ -41,7 +48,7 @@ class StudentVideo extends Component {
       params: { user }
     })
       .then((data) => {
-        this.setState({ userId: data.data[0].id || 2 })
+        this.setState({ userId: data.data[0].id })
         this.getAllTimestamps();
       }
     );
@@ -87,21 +94,20 @@ class StudentVideo extends Component {
         userId: this.state.userId
       }
     })
-    .then((data) => { 
-      return data.data.map((TS) => TS)})
+    .then((data) => data.data.map((TS) => TS))
     .then((TS) => {
-      this.setState({timestamps: TS})
+      this.setState({ timestamps: TS })
     })
   }
   
   changeVideo(timestamp) {
-    this.setState({startingTimestamp: timestamp})
+    this.setState({ startingTimestamp: timestamp })
   }
 
   getMessage(message) {
     const videoId = this.props.location.videoId;
     if (message.room === videoId) {
-      this.setState({messages: [...this.state.messages, message]})
+      this.setState({ messages: [...this.state.messages, message] })
     }
   } 
 
@@ -113,42 +119,15 @@ class StudentVideo extends Component {
     this.setState({messages: [...this.state.messages, mess]});
   }
 
-  changeView() {
-    this.setState({view: this.state.view === 'timestamps' ? 'chat' : 'timestamps'});
-  }
+  handleTabChange(value) {
+    this.setState({
+      slideIndex: value,
+      // view: this.state.view === 'timestamps' ? 'chat' : 'timestamps'
+    });
+  };
 
   handleUserInput(e) {
     this.setState({userInput: e.target.value})
-  }
-
-  showSidebar = () => {
-    if (this.state.view === 'chat') {
-      return (
-        <div>
-          <TextField
-            id='message'
-            placeHolder="message"
-            value={ this.state.userInput }
-            onChange={ (e) => this.handleUserInput(e) }
-          />
-          <RaisedButton
-            label="submit"
-            onClick={ () => {
-              this.sendMessage(this.state.userInput);
-              this.setState({userInput: ''});
-            }}
-          />
-        </div>
-      );
-    }
-    return (
-      <TimestampList 
-        timestamps={this.state.view === 'timestamps' ? this.state.timestamps : this.state.messages} 
-        deleteTimestamp={this.deleteTimestamp}
-        changeVideo={this.changeVideo}
-        view={this.state.view}
-      />
-    );
   }
   
   render() {  
@@ -165,17 +144,67 @@ class StudentVideo extends Component {
             />
           </Paper>
           <Paper style={ sideBarPaper }>
-            <RaisedButton
-              label={this.state.view === 'timestamps' ? 'chat' : 'timestamps'} 
-              onClick={ () => this.changeView() }
-            />
-            { this.showSidebar() }
+            <Tabs
+              onChange={ this.handleTabChange }
+              value={ this.state.slideIndex }
+            >
+              <Tab
+                label="Questions"
+                icon={ <FontIcon className="material-icons">record_voice_over</FontIcon> }
+                value={0}
+              />
+              <Tab
+                label="Chat"
+                icon={ <FontIcon className="material-icons">chat</FontIcon> }
+                value={1}
+              />
+            </Tabs>
+            <SwipeableViews
+              index={ this.state.slideIndex }
+              onChangeIndex={ this.handleTabChange }
+            >
+              <div style={ styles.slide }>
+                <TimestampList 
+                  timestamps={this.state.view === 'timestamps' ? this.state.timestamps : this.state.messages} 
+                  deleteTimestamp={this.deleteTimestamp}
+                  changeVideo={this.changeVideo}
+                  view={this.state.view}
+                />
+              </div>
+              <div style={ styles.slide }>
+                <TextField
+                  id='message'
+                  placeholder="message"
+                  value={ this.state.userInput }
+                  onChange={ (e) => this.handleUserInput(e) }
+                />
+                <RaisedButton
+                  label="submit"
+                  onClick={ () => {
+                    this.sendMessage(this.state.userInput);
+                    this.setState({userInput: ''});
+                  }}
+                />
+              </div>
+            </SwipeableViews>
           </Paper>
         </div>
       </Paper>
     )
   }
 }
+
+const styles = {
+  headline: {
+    fontSize: 24,
+    paddingTop: 16,
+    marginBottom: 12,
+    fontWeight: 400,
+  },
+  slide: {
+    padding: 10,
+  },
+};
 
 const mainPaper = {
   height: '100%',

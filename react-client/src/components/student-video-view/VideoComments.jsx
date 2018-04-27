@@ -96,12 +96,12 @@ class VideoComments extends Component {
         >
           <Tab
             label="Comment"
-            icon={<FontIcon className="material-icons">mode_comment</FontIcon>}
+            icon={ <FontIcon className="material-icons">mode_comment</FontIcon> }
             value={ 0 }
           />
           <Tab
             label="Notes"
-            icon={<FontIcon className="material-icons">mode_edit</FontIcon>}
+            icon={ <FontIcon className="material-icons">mode_edit</FontIcon> }
             value={ 1 }
           />
         </Tabs>
