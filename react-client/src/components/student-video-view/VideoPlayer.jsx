@@ -6,7 +6,7 @@ class VideoPlayer extends Component {
     super(props)
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
   }
-
+//register this
   saveTimeStamp(timestamp, comment, radioValue) {
     this.props.saveTimeStamp(timestamp, comment, radioValue);
   }
