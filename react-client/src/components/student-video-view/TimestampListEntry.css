@@ -1,0 +1,17 @@
+.fixer {
+	background-color: #eee;
+}
+
+.fixer div {
+	display: block !important;
+	float: left;
+	width: 100%;
+	padding: 0 !important;
+}
+
+.fixer:after,
+.fixer div:after {
+  content: "";
+  clear: both;
+  display: table;
+}
