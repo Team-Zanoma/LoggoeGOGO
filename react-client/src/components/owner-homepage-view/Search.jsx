@@ -29,12 +29,8 @@ class Search extends React.Component {
       <Paper style={style} zDepth={1}>
         <div id="owner-homepage-search-bar">
           <AutoComplete 
-<<<<<<< HEAD
-            id='search'
-=======
             name='autocomplete'
             id='autocomplete'
->>>>>>> fixed several bugs relateding to React and Material-Ui
             dataSource={[]} 
             type="text"
             ref={'autocomplete'}
