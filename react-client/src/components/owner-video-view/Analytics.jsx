@@ -47,9 +47,14 @@ class Analytics extends React.Component {
   }
 
   getChatMessages() {
-    axios.post('/chatMessages', {videoId: this.props.videoId})
+    axios.post('/chatMessages', {videoId: this.props.video.videoId})
     .then(num => {
-      console.log(num);
+      if (num.data.n) {
+        this.setState({sentiment: num.data.n});
+      }
+    })
+    .catch(err => {
+      console.log(err);
     })
   }
 
@@ -108,11 +113,12 @@ class Analytics extends React.Component {
           }
       });
     } else {
+      console.log(this.state.sentiment)
       var gauge = c3.generate({
         bindto: '#gauge',
           data: {
               columns: [
-                  ['user sentiment', 100]
+                  ['user sentiment', this.state.sentiment]
               ],
               type: 'gauge',
               onmouseover: function (d, i) { console.log("onmouseover", d, i); },

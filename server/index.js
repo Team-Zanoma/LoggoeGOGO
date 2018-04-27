@@ -186,46 +186,28 @@ app.post('/chatMessages', (req, res) => {
 
     let azureString = result.reduce((accum, curr) => {return accum + '. ' + curr.body}, '');
 
-    console.log( chalk.bgGreen(azureString)) ;
-    //make api call to azure
     let url = 'https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment';
-    console.log('API Key: ', azureAPI)
     let data = {
       documents: [{language: 'en', id: 1, text: azureString}]
     }
-
     var options = { method: 'POST',
-  url: 'https://eastus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment',
-  headers: 
-   { 'Postman-Token': 'bba7ddd4-ef0c-4b25-b7d0-071acb6fecae',
-     'Cache-Control': 'no-cache',
-     'Content-Type': 'application/json',
-     'Ocp-Apim-Subscription-Key': '4f4323259c214927af3502df2bdf52d3' },
-  body: 
-   { documents: 
-      [ { id: '1',
-          text: 'This is a document written in English.  AWesome job!  Loved it!' } ] },
-  json: true };
+    url: 'https://eastus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment',
+    headers: 
+     { 'Postman-Token': 'bba7ddd4-ef0c-4b25-b7d0-071acb6fecae',
+       'Cache-Control': 'no-cache',
+       'Content-Type': 'application/json',
+       'Ocp-Apim-Subscription-Key': azureAPI },
+    body: 
+     { documents: 
+        [ { id: '1',
+            text: azureString } ] },
+    json: true };
 
-request(options, function (error, response, body) {
-  if (error) throw new Error(error);
+    if (azureString === '') return res.send();
 
-  res.send( chalk.bgBlue( body.documents[0].score.toFixed(2)*100) )
-});
-
-
-  //   let headers = {
-  //     "Ocp-Apim-Subscription-Key": azureAPI,
-  //     "Content-Type": "application/json",
-  //     "accept": "application/json"
-  //   }
-
-
-  //   console.log(url, data, headers);
-  //   axios.post(url, data, headers)
-  //   .then((result) => console.log('api result is: ', result))
-  //   .catch(error => console.log(chalk.bold.black.bgYellow(error)));
-  //   err ? res.send(err) : res.send(result);
+    request(options, function (error, response, body) {
+      res.send({n: body.documents[0].score.toFixed(2)*100});
+    });
   })
 })
 
