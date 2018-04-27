@@ -8,6 +8,7 @@ import VideoComments from '../student-video-view/VideoComments.jsx';
 import FontIcon from 'material-ui/FontIcon';
 
 // https://github.com/CookPete/react-player
+// https://css-tricks.com/html5-progress-element/
 
 class VideoPlayerComponent extends Component {
   constructor(props) {
