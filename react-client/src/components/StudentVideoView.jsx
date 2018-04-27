@@ -3,8 +3,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 
+<<<<<<< HEAD
 import VideoPlayer from './student-video-view/VideoPlayer.jsx';
 import TimestampList from './student-video-view/TimestampList.jsx';
+=======
+import VideoPlayer from './student-video-view/VideoPlayer.jsx'
+import TimestampList from './student-video-view/TimestampList.jsx'
+>>>>>>> fixed several bugs relateding to React and Material-Ui
 
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -160,6 +165,7 @@ class StudentVideo extends Component {
                 icon={ <FontIcon className="material-icons">chat</FontIcon> }
                 value={1}
               />
+<<<<<<< HEAD
             </Tabs>
             <SwipeableViews
               index={ this.state.slideIndex }
@@ -190,6 +196,22 @@ class StudentVideo extends Component {
               </div>
             </SwipeableViews>
           </Paper>
+=======
+              {this.state.view === 'chat' ? 
+              <TextField id='1' name='message' placeHolder="message" value={this.state.userInput} 
+              onChange={(e) => {
+                this.handleUserInput(e);
+              }}
+              /> : ''}
+              {this.state.view === 'chat' ? <RaisedButton label="submit" 
+              onClick={() => {
+                this.sendMessage(this.state.userInput);
+                this.setState({userInput: ''});
+              }}
+              /> : ''}
+            </Paper>
+          </div>
+>>>>>>> fixed several bugs relateding to React and Material-Ui
         </div>
       </Paper>
     )

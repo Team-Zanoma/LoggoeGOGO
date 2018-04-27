@@ -32,7 +32,6 @@ const api = require('../config.js').API;
 const azureAPI = require('../config.js').azureAPI;
 const chalk = require('chalk');
 
-
 //---------------------------------------------------------MIDDLEWARE
 
 app.use(express.static(__dirname + '/../react-client/dist'));

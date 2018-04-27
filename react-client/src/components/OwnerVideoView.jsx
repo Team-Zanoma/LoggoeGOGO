@@ -6,14 +6,18 @@ import OwnerVideoPlayer from './owner-video-view/OwnerVideoPlayer.jsx';
 import OwnerTimeStamps from './owner-video-view/OwnerTimeStamps.jsx';
 import Analytics from './owner-video-view/Analytics.jsx';
 import Paper from 'material-ui/Paper';
+import {Tabs, Tab} from 'material-ui/Tabs';
 
 
 class OwnerVideo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeStamps: []
+      timeStamps: [],
+      tabValue: 'a'
     }
+
+  this.handleTabChange = this.handleTabChange.bind(this);
   }
 
   componentDidMount() {
@@ -28,12 +32,56 @@ class OwnerVideo extends React.Component {
     })
   }
 
+  handleTabChange(value) {
+    this.setState({
+      tabValue: value,
+    });
+  };
+  
+
   render() {
+
+    const styles = {
+      headline: {
+        fontSize: 24,
+        paddingTop: 16,
+        marginBottom: 12,
+        fontWeight: 400,
+      },
+    };
+    
     return (
       <Paper>
         <Paper style={style1}>
           {!!this.props.location.video && <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>}
         </Paper>
+        
+        <Tabs
+        value={this.state.tabValue}
+        onChange={this.handleTabChange}
+        >
+        <Tab label="Tab A" value="a">
+          <div>
+            <h2 style={styles.headline}>Controllable Tab A</h2>
+            <p>
+              Tabs are also controllable if you want to programmatically pass them their values.
+              This allows for more functionality in Tabs such as not
+              having any Tab selected or assigning them different values.
+            </p>
+          </div>
+        </Tab>
+        <Tab label="Tab B" value="b">
+          <div>
+            <h2 style={styles.headline}>Controllable Tab B</h2>
+            <p>
+              This is another example of a controllable tab. Remember, if you
+              use controllable Tabs, you need to give all of your tabs values or else
+              you wont be able to select them.
+            </p>
+          </div>
+        </Tab>
+      </Tabs>
+        
         <Paper style={style2}>
           {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video}/>}
 
@@ -56,7 +104,7 @@ const style1 = {
   textAlign: 'left',
   display: 'block',
   padding: '30px',
-  background: '#666699'
+  background: 'grey'
 }
 
 const style2 = {
@@ -66,7 +114,7 @@ const style2 = {
   textAlign: 'left',
   display: 'block',
   padding: '30px',
-  background: '#88CC88'
+  background: 'grey'
 }
 
 const style3 = {
@@ -76,7 +124,7 @@ const style3 = {
   textAlign: 'left',
   display: 'block',
   padding: '30px',
-  background: '#EE6666'
+  background: 'grey'
 }
 
 export default withRouter(OwnerVideo);

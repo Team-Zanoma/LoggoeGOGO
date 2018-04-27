@@ -69,7 +69,12 @@ class Registration extends React.Component {
       <Paper style={paperStyle}>
 
           <AutoComplete 
+<<<<<<< HEAD
             id='newUsername'
+=======
+            name='autocomplete'
+            id='autocomplete'
+>>>>>>> fixed several bugs relateding to React and Material-Ui
             style={inputStyle} 
             dataSource={[]}
             ref={'autocomplete'}

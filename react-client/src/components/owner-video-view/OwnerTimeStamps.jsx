@@ -15,7 +15,7 @@ class OwnerTimeStamps extends React.Component {
       <div>
         <h2>Timestamps</h2>
         {this.props.timeStamps.map((timeStamp, i) => (
-          <Card style={{margin: '20px'}}>
+          <Card key={i + timeStamp} style={{margin: '20px'}}>
             
             <CardHeader 
             style={{backgroundColor: 'grey'}}
