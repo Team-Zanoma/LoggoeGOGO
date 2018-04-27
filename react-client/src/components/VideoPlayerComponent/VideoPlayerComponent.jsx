@@ -85,6 +85,7 @@ class VideoPlayerComponent extends Component {
     screenfull.request(findDOMNode(this.player));
 	}
 
+<<<<<<< HEAD
   ref = player => {
     this.player = player
   }
