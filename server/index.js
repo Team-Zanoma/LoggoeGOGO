@@ -168,7 +168,6 @@ app.post('/timestamps', (req, res) => {
   let params = req.body.params;
   console.log(params)
   setTimestamp(params, (success) => {
-    console.log(success)
     res.status(201).send()
   });
 })
