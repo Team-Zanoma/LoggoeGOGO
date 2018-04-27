@@ -43,7 +43,7 @@ class VideoComments extends Component {
   }
 
   sendCommentDetails() {
-    const timestamp = Math.floor(this.state.player.getCurrentTime());
+    // console.log(this.state.comment, this.state.radioButtonValue)
     this.props.getCommentDetails(this.state.comment, this.state.radioButtonValue);
   }
 
