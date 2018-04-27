@@ -40,7 +40,7 @@ class OwnerVideo extends React.Component {
         </Paper>
         <Paper style={style3}>
             <div>
-              {this.state.timeStamps.length !== 0 && <OwnerTimeStamps videoId={this.props.location.video.videoId} timeStamps={this.state.timeStamps}/>}
+              {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
             </div>
         </Paper>
       </Paper>
