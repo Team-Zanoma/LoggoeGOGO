@@ -18,6 +18,7 @@ class OwnerVideo extends React.Component {
     }
 
   this.handleTabChange = this.handleTabChange.bind(this);
+  this.handleBackButton = this.handleBackButton.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +48,13 @@ class OwnerVideo extends React.Component {
       tabValue: value,
     });
   };
+
+  handleBackButton() {
+    this.props.history.push({
+      pathname: '/owner',
+      username: '',
+    })
+  }
   
 
   render() {
@@ -62,47 +70,19 @@ class OwnerVideo extends React.Component {
     
     return (
       <Paper>
+        <button onClick={this.handleBackButton}>Go Back</button>
         <Paper style={style1}>
           {!!this.props.location.video && <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>}
         </Paper>
-        
-        <Tabs
-        value={this.state.tabValue}
-        onChange={this.handleTabChange}
-        >
-        <Tab label="Tab A" value="a">
-          <div>
-            <h2 style={styles.headline}>Controllable Tab A</h2>
-            <p>
-              Tabs are also controllable if you want to programmatically pass them their values.
-              This allows for more functionality in Tabs such as not
-              having any Tab selected or assigning them different values.
-            </p>
-          </div>
-        </Tab>
-        <Tab label="Tab B" value="b">
-          <div>
-            <h2 style={styles.headline}>Controllable Tab B</h2>
-            <p>
-              This is another example of a controllable tab. Remember, if you
-              use controllable Tabs, you need to give all of your tabs values or else
-              you wont be able to select them.
-            </p>
-          </div>
-        </Tab>
-      </Tabs>
-        
         <Paper style={style2}>
           {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video}/>}
-
         </Paper>
         <Paper style={style3}>
-            <div>
-              {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
-            </div>
+          <div>
+            {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
+          </div>
         </Paper>
       </Paper>
-
     )
   }
 }
