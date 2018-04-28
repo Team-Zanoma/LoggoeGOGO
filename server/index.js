@@ -228,7 +228,7 @@ app.post('/chatMessages', (req, res) => {
     json: true };
 
     if (azureString === '') return res.send();
-
+  
     request(options, function (error, response, body) {
       res.send({n: body.documents[0].score.toFixed(2)*100});
     });

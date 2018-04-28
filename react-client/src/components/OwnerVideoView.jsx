@@ -6,7 +6,10 @@ import OwnerVideoPlayer from './owner-video-view/OwnerVideoPlayer.jsx';
 import OwnerTimeStamps from './owner-video-view/OwnerTimeStamps.jsx';
 import Analytics from './owner-video-view/Analytics.jsx';
 import Paper from 'material-ui/Paper';
-import {Tabs, Tab} from 'material-ui/Tabs';
+
+import { Tabs, Tab } from 'material-ui/Tabs';
+import FontIcon from 'material-ui/FontIcon';
+import SwipeableViews from 'react-swipeable-views';
 
 
 class OwnerVideo extends React.Component {
@@ -14,7 +17,7 @@ class OwnerVideo extends React.Component {
     super(props);
     this.state = {
       timeStamps: [],
-      tabValue: 'a',
+      slideIndex: 0,
       videoId: null
     }
 
@@ -61,7 +64,7 @@ class OwnerVideo extends React.Component {
 
   handleTabChange(value) {
     this.setState({
-      tabValue: value,
+      slideIndex: value
     });
   };
 
@@ -84,24 +87,77 @@ class OwnerVideo extends React.Component {
     };
     
     return (
-      <Paper>
-        <button onClick={this.handleBackButton}>Go Back</button>
-        <Paper style={style1}>
-          {!!this.props.location.video && <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>}
+      <Paper style={ mainPaper }>
+        <Paper style={ fullPaper }>
+          <button onClick={ this.handleBackButton }>Go Back</button>
         </Paper>
-        <Paper style={style2}>
-          {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video || this.state.videoId}/>}
-
+        <Paper style={ chartPaper }>
+          <Tabs
+            onChange={ this.handleTabChange }
+            value={ this.state.slideIndex }
+          >
+            <Tab
+              label="Analytics"
+              icon={ <FontIcon className="material-icons">timeline</FontIcon> }
+              value={0}
+            />
+            <Tab
+              label="Video"
+              icon={ <FontIcon className="material-icons">videocam</FontIcon> }
+              value={1}
+            />
+          </Tabs>
+          <SwipeableViews
+            index={ this.state.slideIndex }
+            onChangeIndex={ this.handleTabChange }
+          >
+            <div className="slide">
+              { this.state.timeStamps.length !== 0 && <Analytics timeStamps={ this.state.timeStamps } video={ this.props.location.video || this.state.videoId }/> }
+            </div>
+            <div className="slide">
+              { !!this.props.location.video && <OwnerVideoPlayer videoId={ this.props.location.video.videoId }/> }
+            </div>
+          </SwipeableViews>
         </Paper>
-        <Paper style={style3}>
-          <div>
-            {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
-          </div>
+        <Paper style={ sideBarVideo }>
+          { this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={ this.state.timeStamps }/> }
         </Paper>
       </Paper>
     )
   }
 }
+
+
+const mainPaper = {
+  height: '100%',
+  width: '100%',
+  textAlign: 'center',
+  display: 'inline-block',
+  padding: '30px',
+  background: '#D8E4EA',
+}
+
+const sideBarVideo = {
+  width: 'calc(30% - 10px)', 
+  float: 'right',
+}
+
+const chartPaper = {
+  width: 'calc(70% - 10px)', 
+  float: 'left',
+}
+
+const fullPaper = {
+  width: '100%', 
+  float: 'left',
+  marginBottom: '20px'
+}
+
+
+
+
+
+
 
 const style1 = {
   height: '100%',
@@ -134,30 +190,3 @@ const style3 = {
 }
 
 export default withRouter(OwnerVideo);
-
-/*
-return (
-  <Paper style={style} zDepth={1}>
-    <div style={{display: 'inline-block'}}>
-        <div style={style2}>
-          <Paper style={{padding: '20px'}}>
-            <div>
-              {!!this.props.location.video && <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>}
-            </div>
-          </Paper>
-          <br/>
-          <Paper style={{padding: '20px'}}>
-            <div>
-              {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video}/>}
-            </div>
-          </Paper>
-        </div>
-        <Paper style={style3}>
-          <div>
-            {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
-          </div>
-        </Paper>
-    </div>  
-  </Paper>
-)
-*/

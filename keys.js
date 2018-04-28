@@ -3,5 +3,6 @@ module.exports = {
   host     : process.env.host || keys.host,
   user     : process.env.user || keys.user,
   database : process.env.database || keys.database,
-  password : process.env.password || keys.password
+  password : process.env.password || keys.password,
+  azureAPI : process.env.azureAPI || keys.azureAPI
 }

@@ -3,9 +3,11 @@ import axios from 'axios';
 import c3 from 'c3';
 import 'c3/c3.css';
 import RaisedButton from 'material-ui/RaisedButton';
-import Popover from 'material-ui/Popover';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
+// import Popover from 'material-ui/Popover';
+// import Menu from 'material-ui/Menu';
+// import MenuItem from 'material-ui/MenuItem';
+
+import './Analytics.css';
 
 class Analytics extends React.Component {
   constructor(props) {
@@ -23,6 +25,7 @@ class Analytics extends React.Component {
     this.getBuckets = this.getBuckets.bind(this);
     this.createChart = this.createChart.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleClick2 = this.handleClick2.bind(this);
   }
 
   componentDidMount() {
@@ -100,8 +103,8 @@ class Analytics extends React.Component {
         },
         axis: {
             x: {
-                type: 'category',
-                categories: times
+              type: 'category',
+              categories: times
             }
         }
       });
@@ -109,35 +112,35 @@ class Analytics extends React.Component {
       const pie = c3.generate({
           bindto: '#pie',
           data: {
-              columns: this.state.tags,
-              type : 'pie',
-              onclick: function (d, i) { console.log("onclick", d, i); },
-              onmouseover: function (d, i) { console.log("onmouseover", d, i); },
-              onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+            columns: this.state.tags,
+            type : 'pie',
+            onclick: function (d, i) { console.log("onclick", d, i); },
+            onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+            onmouseout: function (d, i) { console.log("onmouseout", d, i); }
           },
           size: {
-              height: 350
+            height: 350
           }
       });
     } else {
       var gauge = c3.generate({
         bindto: '#gauge',
           data: {
-              columns: [
-                  ['user sentiment', this.state.sentiment]
-              ],
-              type: 'gauge',
-              onmouseover: function (d, i) { console.log("onmouseover", d, i); },
-              onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+            columns: [
+              ['user sentiment', this.state.sentiment]
+            ],
+            type: 'gauge',
+            onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+            onmouseout: function (d, i) { console.log("onmouseout", d, i); }
           },
           color: {
-              pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], 
-              threshold: {
-                  values: [30, 60, 90, 100]
-              }
+            pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], 
+            threshold: {
+              values: [30, 60, 90, 100]
+            }
           },
           size: {
-              height: 300
+            height: 300
           }
       }); 
     }
@@ -147,39 +150,54 @@ class Analytics extends React.Component {
     const innerText = e.target.innerText;
     const view = innerText === 'Confusion Graph' ? 'chart' 
     : innerText === 'Feedback Pie' ? 'pie' : 'gauge';
-    this.setState({view: view});
+    this.setState({ view: view });
+  }
+
+  handleClick2(e) {
+    const innerText = e.target.innerText;
+    let view;
+    if (innerText === 'CONFUSION GRAPH') { view = 'chart'; }
+    else if (innerText === 'FEEDBACK PIE') { view = 'pie'; }
+    else { view = 'gauge'; }
+
+    this.setState({ view });
   }
 
   
   render() {
     return (
       <div>
-        <h2>Analytics</h2>
-      <div>
-        <RaisedButton
-          onClick={(e) => {
-            e.preventDefault();
-            this.setState({open: true, anchorEl: e.currentTarget});
-          }}
-          label="views"
-        />
-        <Popover
-          open={this.state.open}
-          anchorEl={this.state.anchorEl}
-          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
-          onRequestClose={() => {
-            this.setState({open: false})
-          }}
-        >
-          <Menu>
-            <MenuItem value="chart" primaryText="Confusion Graph" onClick={this.handleClick}/>
-            <MenuItem value="pie" primaryText="Feedback Pie" onClick={this.handleClick}/>
-            <MenuItem value="gauge" primaryText="Chat Sentiment" onClick={this.handleClick}/>
-          </Menu>
-        </Popover>
-          <div id={this.state.view}>
+        <div className="app">
+          <div className="chartBtnBar">
+            <RaisedButton label="Confusion Graph" onClick={ this.handleClick2 }/>
+            <RaisedButton label="Feedback Pie" onClick={ this.handleClick2 }/>
+            <RaisedButton label="Chat Sentiment" onClick={ this.handleClick2 }/>
           </div>
+          {/*
+            <RaisedButton
+              onClick={(e) => {
+                e.preventDefault();
+                this.setState({ open: true, anchorEl: e.currentTarget });
+              }}
+              label="views"
+            />
+            <Popover
+              open={ this.state.open }
+              anchorEl={ this.state.anchorEl }
+              anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+              targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+              onRequestClose={() => {
+                this.setState({ open: false })
+              }}
+            >
+              <Menu>
+                <MenuItem value="chart" primaryText="Confusion Graph" onClick={ this.handleClick }/>
+                <MenuItem value="pie" primaryText="Feedback Pie" onClick={ this.handleClick }/>
+                <MenuItem value="gauge" primaryText="Chat Sentiment" onClick={ this.handleClick }/>
+              </Menu>
+            </Popover>
+          */}
+          <div id={ this.state.view }></div>
         </div> 
       </div> 
     );
