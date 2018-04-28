@@ -71,7 +71,6 @@ class StudentVideo extends Component {
     })
       .then((data) => {
         this.setState({ userId: data.data[0].id })
-        console.log('id', data.data[0].id)
         this.getAllTimestamps();
         this.getNotes();
       }
@@ -185,6 +184,7 @@ class StudentVideo extends Component {
               saveTimeStamp={ this.saveTimeStamp }
               makeNote={ this.makeNote }
               getNotes={this.getNotes}
+              userId={this.state.userId}
             />
           </Paper>
           <Paper style={ sideBarPaper }>

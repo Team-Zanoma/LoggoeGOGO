@@ -250,9 +250,9 @@ app.post('/userNotes', (req, res) => {
   })
 })
 
-app.delete('/notes', (res, req) => {
-  const { username, note } = req.query;
-
+app.delete('/notes', (req, res) => {
+  const { user, note } = req.query;
+  console.log(req.query);
   res.send();
 })
 

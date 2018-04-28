@@ -102,7 +102,7 @@ class VideoPlayerComponent extends Component {
     if (this.props.hasComments) {
       return (
         <section className="section">
-          <VideoComments getNotes={this.props.getNotes} makeNote={ this.props.makeNote } getCommentDetails={ this.getCommentDetails } />
+          <VideoComments userId={this.props.userId} getNotes={this.props.getNotes} makeNote={ this.props.makeNote } getCommentDetails={ this.getCommentDetails } />
         </section>
       );
     }
