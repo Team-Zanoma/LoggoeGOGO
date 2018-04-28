@@ -24,24 +24,17 @@ class StudentHomepage extends React.Component {
       this.getVideos(); 
     }
 
-    authenticate() {
-      axios.get('/auth')
-      .then(resp => {
-        this.getUserId(resp.data); 
-      })
-    }
-
     getVideos() {
       axios.get('/student/homepage')
       .then((response) => this.setState({videoList: response.data})); 
     }
 
     sendToSelectedVideo(videoId) {
-        this.props.history.push({
-            pathname: '/student/video',
-            videoId: videoId,
-            username: this.props.location.username
-          })
+      this.props.history.push({
+          pathname: '/student/video',
+          videoId: videoId,
+          username: this.props.location.username
+        })
     }
 
     getUserId(user) {
