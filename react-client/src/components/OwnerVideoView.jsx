@@ -24,6 +24,16 @@ class OwnerVideo extends React.Component {
     this.showTimestamps();
   }
 
+  storeVideoId() {
+    axios.post('/videoId')
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
   showTimestamps() {
     axios.get('/timestamps/owner', {params: {videoId: this.props.location.video.videoId}})
     .then((data) => {
