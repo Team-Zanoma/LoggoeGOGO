@@ -7,6 +7,7 @@ const lodash = require('lodash');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+const session = require('express-session');
 const {
   getOwnerTimestamp,
   getCurrentVideo,
@@ -22,7 +23,9 @@ const {
   getBuckets,
   deleteTimestamp, 
   addChatMessage,
-  getAllMessages
+  getAllMessages,
+  makeNote,
+  getNotes
 } = require('../database-mysql');
 var request = require("request");
 
@@ -37,14 +40,21 @@ const chalk = require('chalk');
 app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}))
 
 //---------------------------------------------------------USER LOGIN
 
 app.post('/login', (req, res) => {
   getUser(req.body.username, (err, response) => {
-    (err) ? 
-      res.status(403).send(err) :
-      res.status(201).send(response);
+    
+    req.session.user = req.body.username;
+
+    err ? res.status(403).send(err) 
+    : res.status(201).send(response);
   });
 });
 
@@ -52,8 +62,9 @@ app.post('/login', (req, res) => {
 
 app.post('/register', (req, res) => {
   getUser(req.body.username, (err, response) => {
+    req.session.username = req.body.username;
+
     if (err) res.status(403).send(err);
-    
     let isExist = !!response.length;
 
     if (isExist) {
@@ -66,9 +77,13 @@ app.post('/register', (req, res) => {
           res.status(201).send(false)
       )      
     }
-
   })
 })
+//---------------------------------------------------------AUTH
+app.get('/auth', (req, res) => {
+  res.send(req.session.user);
+})
+
 
 //---------------------------------------------------------USER ID
 //get userId for owner homepage and student homepage
@@ -207,6 +222,23 @@ app.post('/chatMessages', (req, res) => {
     request(options, function (error, response, body) {
       res.send({n: body.documents[0].score.toFixed(2)*100});
     });
+  })
+})
+
+//---------------------------------------------------------NOTES
+
+app.post('/notes', (req, res) => {
+  const { note, userId, videoId } = req.body;
+  makeNote(note, userId, videoId, (err, success) => {
+    err ? res.send(err) : res.send(success);
+  })
+})
+
+app.post('/userNotes', (req, res) => {
+  const { userId, videoId } = req.body;
+  console.log(userId, videoId)
+  getNotes(userId, videoId, (err, notes) => {
+    err ? res.send(err) : res.send(notes);
   })
 })
 

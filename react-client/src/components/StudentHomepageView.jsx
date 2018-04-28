@@ -30,11 +30,11 @@ class StudentHomepage extends React.Component {
     }
 
     sendToSelectedVideo(videoId) {
-        this.props.history.push({
-            pathname: '/student/video',
-            videoId: videoId,
-            username: this.props.location.username
-          })
+      this.props.history.push({
+          pathname: '/student/video',
+          videoId: videoId,
+          username: this.props.location.username
+        })
     }
 
     getUserId(user) {

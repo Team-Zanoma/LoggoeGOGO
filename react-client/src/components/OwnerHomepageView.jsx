@@ -28,7 +28,14 @@ class OwnerHomepage extends React.Component {
   }
 
   componentDidMount() {
-    this.getUserId(this.props.location.username) 
+    this.authenticate;
+  }
+
+  authenticate() {
+    axios.get('/auth')
+    .then(resp => {
+      this.getUserId(resp.data);
+    })
   }
   
   getVideos(query) {
