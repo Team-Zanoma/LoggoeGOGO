@@ -14,6 +14,7 @@ import Divider from 'material-ui/Divider';
 
 import './VideoComments.css';
 import './TimestampListEntry.css'
+import Moment from 'moment';
 
 class VideoComments extends Component {
   constructor(props) {
@@ -37,6 +38,7 @@ class VideoComments extends Component {
     this.makeNote = this.makeNote.bind(this);
     this.showComments = this.showComments.bind(this);
     this.getNotes = this.getNotes.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
   }
 
   handleRadioButtonChange(event) {
@@ -83,17 +85,25 @@ class VideoComments extends Component {
       })
     })
   }
+
+  deleteNote(event) {
+
+  }
+
   showComments() {
     var notes = this.state.notes;
     return notes.map((note, index) => {
       return (
         <div>   
           <Card>
-            <CardHeader style={{fontWeight: "bold", backgroundColor: "lightgray"}}
-              title={'Note ' + (index + 1)}
+            <CardHeader style={{fontWeight: "bold", backgroundColor: "#eee"}}
+              title={'Created at ' + Moment(note.addedAt).format('MMMM Do YYYY, h:mm:ss a')}
             />
-            <CardText onClick={(e) => this.deleteNote(e)}>
-              {note.body}
+            <CardText>
+              <span className="noteComment">{note.body}</span>
+              <div style={{ float: 'right' }}>
+                <RaisedButton>Delete Note</RaisedButton>
+              </div>
             </CardText>
           </Card>
           
@@ -214,7 +224,8 @@ class VideoComments extends Component {
             </label>
           </div>
         </SwipeableViews>
-        <Card style={{backgroundColor: '#676767', margin: '5px 0 5px 0', textAlign: 'center', fontWeight: 'bold'}}>
+        <Divider />
+        <Card style={{backgroundColor: '#666', margin: '0 0 10px 0', margin: '10px 0 10px 0', textAlign: 'center', fontWeight: 'bold'}}>
           <CardText style={{color: 'white', fontSize: '1.25em', fontFamily: 'Arial'}}>
             Your Personal Notes
           </CardText>
