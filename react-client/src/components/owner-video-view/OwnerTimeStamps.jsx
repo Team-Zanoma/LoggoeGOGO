@@ -11,29 +11,30 @@ class OwnerTimeStamps extends React.Component {
 
   render() {
     // create the list of timestamp items, then render the list
+    var timeStamps = this.props.timeStamps.map((timeStamp, i) => (
+      <Card key={i + timeStamp} style={{margin: '20px'}}>
+        
+        <CardHeader 
+          style={{backgroundColor: 'grey'}}
+          title={'Time: ' + (timeStamp.timestamp / 60 | 0) + ':' + String(timeStamp.timestamp % 60).padStart(2, '0')} 
+          subtitle={'name: ' + timeStamp.name}
+        /> 
+        <CardText>
+          <VideoPlayerComponent 
+            videoId={this.props.videoId} 
+            startingTimestamp={timeStamp.timestamp}
+          />
+          <b>Comment:</b>&nbsp;{timeStamp.comment}
+          <br/>
+          <strong>Tag:</strong><Chip style={{display: 'inline', backgroundColor: '#999999', margin: '0 0 0 5px', color: 'white'}}>{timeStamp.tag ? timeStamp.tag : 'n/a'}</Chip>
+        </CardText>
+      </Card>
+    ));
+
     return (
       <div>
-        <h2>Timestamps</h2>
-        {this.props.timeStamps.map((timeStamp, i) => (
-          <Card key={i + timeStamp} style={{margin: '20px'}}>
-            
-            <CardHeader 
-            style={{backgroundColor: 'grey'}}
-            title={'Time: ' + (timeStamp.timestamp / 60 | 0) + ':' + String(timeStamp.timestamp % 60).padStart(2, '0')} 
-            subtitle={'name: ' + timeStamp.name}/> 
-            <CardText>
-    
-              <VideoPlayerComponent 
-                videoId={this.props.videoId} 
-                startingTimestamp={timeStamp.timestamp}
-              />
-     
-              <b>Comment:</b>&nbsp;{timeStamp.comment}
-              <br/>
-              <strong>Tag:</strong><Chip style={{display: 'inline', backgroundColor: '#999999', margin: '0 0 0 5px', color: 'white'}}>{timeStamp.tag ? timeStamp.tag : 'n/a'}</Chip>
-            </CardText>
-          </Card>
-        ))}
+        <h2>Timestamps</h2> 
+          {timeStamps}
       </div>   
     )
     
@@ -41,23 +42,3 @@ class OwnerTimeStamps extends React.Component {
 }
 
 export default OwnerTimeStamps;
-
-/*
-return (
-      <div>
-        {this.props.timeStamps.map((timeStamp, i) => (
-          <Card style={{margin: '20px'}}>
-            <CardHeader 
-            style={{backgroundColor: 'grey'}}
-            title={'Time: ' + (timeStamp.timestamp / 60 | 0) + ':' + String(timeStamp.timestamp % 60).padStart(2, '0')} 
-            subtitle={'name: ' + timeStamp.name}/> 
-            <CardText>
-              <b>Comment:</b>&nbsp;{timeStamp.comment}
-              <br/>
-              <strong>Tag:</strong><Chip style={{display: 'inline', backgroundColor: '#999999', margin: '0 0 0 5px', color: 'white'}}>{timeStamp.tag ? timeStamp.tag : 'n/a'}</Chip>
-            </CardText>
-          </Card>
-        ))}
-      </div>   
-    )
-    */

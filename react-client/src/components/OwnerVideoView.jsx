@@ -18,7 +18,8 @@ class OwnerVideo extends React.Component {
       videoId: null
     }
 
-    this.handleTabChange = this.handleTabChange.bind(this);
+  this.handleTabChange = this.handleTabChange.bind(this);
+  this.handleBackButton = this.handleBackButton.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +64,13 @@ class OwnerVideo extends React.Component {
       tabValue: value,
     });
   };
+
+  handleBackButton() {
+    this.props.history.push({
+      pathname: '/owner',
+      username: '',
+    })
+  }
   
 
   render() {
@@ -77,6 +85,7 @@ class OwnerVideo extends React.Component {
     
     return (
       <Paper>
+        <button onClick={this.handleBackButton}>Go Back</button>
         <Paper style={style1}>
           {!!this.props.location.video && <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>}
         </Paper>
@@ -85,12 +94,11 @@ class OwnerVideo extends React.Component {
 
         </Paper>
         <Paper style={style3}>
-            <div>
-              {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
-            </div>
+          <div>
+            {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
+          </div>
         </Paper>
       </Paper>
-
     )
   }
 }

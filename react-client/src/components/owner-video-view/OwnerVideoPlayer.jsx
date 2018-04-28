@@ -80,13 +80,6 @@ class OwnerVideoPlayer extends React.Component {
             />
           </Paper>
         </div>
-          <Snackbar
-            open={this.state.open}
-            style={{textAlign: 'center'}}
-            message="Comment Added To Database"
-            autoHideDuration={2000}
-            onRequestClose={this.handleRequestClose}
-          />
       </div>
     );
   }
