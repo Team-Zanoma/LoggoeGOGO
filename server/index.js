@@ -25,7 +25,8 @@ const {
   addChatMessage,
   getAllMessages,
   makeNote,
-  getNotes
+  getNotes,
+  deleteNote
 } = require('../database-mysql');
 var request = require("request");
 
@@ -198,7 +199,7 @@ app.post('/timestamps', (req, res) => {
 
 app.delete('/timestamps', (req, res) => {
   let params = req.query;
-  deleteTimestamp(params, (success) => {res.send()})
+  deleteTimestamp(params, (success) => res.send())
 })
 
 //---------------------------------------------------------GET MESSAGES
@@ -251,9 +252,10 @@ app.post('/userNotes', (req, res) => {
 })
 
 app.delete('/notes', (req, res) => {
-  const { user, note } = req.query;
-  console.log(req.query);
-  res.send();
+  const { user, note, videoId } = req.query;
+  deleteNote(user, note, videoId, (err, succ) => {
+    err ? res.send(err) : res.send(succ);
+  })
 })
 
 //---------------------------------------------------------CATCH ALL FOR REACT-ROUTER

@@ -165,9 +165,7 @@ const deleteTimestamp = ({userId, videoId, timestamp}, callback) => {
   const query = `DELETE FROM timeStamps WHERE userId = ${userId} AND videoId = '${videoId}' AND timeStamp = ${timestamp};`
 
   connection.query(query, (err, results, fields) => {
-    (err) ?
-      console.error(err) :
-      callback(results);
+    err ? console.error(err) : callback(results);
   })
 }
 
@@ -206,9 +204,18 @@ const getNotes = (userId, videoId, callback) => {
     err ? callback(err) : callback(null, res);
   })
 }
+
+const deleteNote = (userId, body, videoId, callback) => {
+  const query = 'DELETE FROM notes WHERE user_id = ? AND body = ? AND video_id = (SELECT id FROM videos WHERE videoId = ?);';
+  const values = [userId, body, videoId];
+  connection.query(query, values, (err, succ) => {
+    err ? callback(err) : callback(null, succ);
+  })
+}
   
 exports.getNotes = getNotes;
 exports.makeNote = makeNote;  
+exports.deleteNote = deleteNote;
 exports.getBuckets = getBuckets;
 exports.getUser = getUser;
 exports.setUser = setUser;
