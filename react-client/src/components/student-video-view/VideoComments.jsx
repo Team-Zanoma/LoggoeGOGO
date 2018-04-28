@@ -73,6 +73,7 @@ class VideoComments extends Component {
   deleteNote(note) {
     console.error('deleteNote value is:', note)
     axios.delete('/notes', { params: { note: note.body, user: note.user_id, videoId: note.video_id } })
+    .then(() => this.getNotes());
   }
 
   handleWindowResize() {

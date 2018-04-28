@@ -206,7 +206,7 @@ const getNotes = (userId, videoId, callback) => {
 }
 
 const deleteNote = (userId, body, videoId, callback) => {
-  const query = 'DELETE FROM notes WHERE user_id = ? AND body = ? AND video_id = (SELECT id FROM videos WHERE videoId = ?);';
+  const query = 'DELETE FROM notes WHERE user_id = ? AND body = ? AND video_id = ?;';
   const values = [userId, body, videoId];
   connection.query(query, values, (err, succ) => {
     err ? callback(err) : callback(null, succ);

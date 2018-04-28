@@ -253,6 +253,8 @@ app.post('/userNotes', (req, res) => {
 
 app.delete('/notes', (req, res) => {
   const { user, note, videoId } = req.query;
+
+  console.log( user, note, videoId);
   deleteNote(user, note, videoId, (err, succ) => {
     err ? res.send(err) : res.send(succ);
   })
