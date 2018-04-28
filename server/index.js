@@ -245,10 +245,15 @@ app.post('/notes', (req, res) => {
 
 app.post('/userNotes', (req, res) => {
   const { userId, videoId } = req.body;
-  console.log(userId, videoId)
   getNotes(userId, videoId, (err, notes) => {
     err ? res.send(err) : res.send(notes);
   })
+})
+
+app.delete('/notes', (res, req) => {
+  const { username, note } = req.query;
+
+  res.send();
 })
 
 //---------------------------------------------------------CATCH ALL FOR REACT-ROUTER

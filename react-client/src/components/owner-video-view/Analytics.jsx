@@ -30,6 +30,11 @@ class Analytics extends React.Component {
     this.getChatMessages();
   }
 
+  componentDidUpdate() {
+    this.createChart(this.state.view);
+  }
+    
+
   getBuckets() {
     axios.get('/buckets', {
       params: {
@@ -82,6 +87,8 @@ class Analytics extends React.Component {
     const data = this.state.counts.slice();
     const times = this.state.buckets.slice();
     times[times.length-1] = times[times.length-1] + '+';
+
+    console.log('type:', type);
 
     if (type === 'chart') {
       const chart = c3.generate({
@@ -137,7 +144,7 @@ class Analytics extends React.Component {
   }
 
   handleClick(e) {
-    const innerText = e.target.innerText
+    const innerText = e.target.innerText;
     const view = innerText === 'Confusion Graph' ? 'chart' 
     : innerText === 'Feedback Pie' ? 'pie' : 'gauge';
     this.setState({view: view});
@@ -145,7 +152,6 @@ class Analytics extends React.Component {
 
   
   render() {
-    this.createChart(this.state.view);
     return (
       <div>
         <h2>Analytics</h2>
