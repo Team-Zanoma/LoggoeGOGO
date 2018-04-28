@@ -10,10 +10,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import SwipeableViews from 'react-swipeable-views';
 import {Card, CardHeader, CardText} from 'material-ui/Card'; 
-<<<<<<< HEAD
-=======
 import Divider from 'material-ui/Divider';
->>>>>>> newnotes
 
 import './VideoComments.css';
 import './TimestampListEntry.css'
@@ -210,23 +207,12 @@ class VideoComments extends Component {
             </label>
           </div>
         </SwipeableViews>
-<<<<<<< HEAD
-        <Card>
-          <CardHeader
-            title="Note"
-          />
-          <CardText>
-            {'This is a sample note'}
-          </CardText>
-      </Card>
-=======
         <Card style={{backgroundColor: '#676767', margin: '5px 0 5px 0', textAlign: 'center', fontWeight: 'bold'}}>
           <CardText style={{color: 'white', fontSize: '1.25em', fontFamily: 'Arial'}}>
             Your Personal Notes
           </CardText>
         </Card>
         {this.showComments()}
->>>>>>> newnotes
       </div>
     );
   }
