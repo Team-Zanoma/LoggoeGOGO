@@ -145,7 +145,7 @@ class StudentVideo extends Component {
   getNotes(callback) { // gets called inside getUserId function above, we need the userId before we can get the notes
     axios.post('/userNotes', { userId: this.state.userId, videoId: this.props.location.videoId })
     .then(notes => {
-      callback(notes);
+      if (callback) callback(notes);
     })
     .catch(err => {
       console.error(err);

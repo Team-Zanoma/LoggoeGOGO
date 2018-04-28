@@ -66,12 +66,11 @@ class VideoComments extends Component {
     this.props.makeNote(this.state.note);
 
     this.setState({
-      notes: [...this.state.notes, {body: this.state.note}]
+      notes: [...this.state.notes, {body: this.state.note, addedAt: Moment()}]
     })
   }
 
   deleteNote(note) {
-    console.error('deleteNote value is:', note)
     axios.delete('/notes', { params: { note: note.body, user: note.user_id, videoId: note.video_id } })
     .then(() => this.getNotes());
   }
@@ -93,8 +92,8 @@ class VideoComments extends Component {
 
     return notes.map((note, index) => {
       return (
-        <div>   
-          <Card>
+        <div key={note + index}>   
+          <Card key={note + index}>
             <CardHeader style={{fontWeight: "bold", backgroundColor: "#eee"}}
               title={'Created at ' + Moment(note.addedAt).format('MMMM Do YYYY, h:mm:ss a')}
             />
@@ -105,7 +104,6 @@ class VideoComments extends Component {
               </div>
             </CardText>
           </Card>
-          
         </div>
       )
     })
@@ -113,7 +111,7 @@ class VideoComments extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
-    setTimeout(() => {this.getNotes()}, 1000);
+    setTimeout(() => {this.getNotes()}, 750);
   }
 
   componentWillUnmount() {
