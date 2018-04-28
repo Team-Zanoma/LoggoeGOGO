@@ -27,8 +27,7 @@ class StudentVideo extends Component {
       view: 'timestamps',
       messages: [],
       userInput: '',
-      slideIndex: 0,
-      notes: []
+      slideIndex: 0
     }
 
     this.getAllTimestamps = this.getAllTimestamps.bind(this);
@@ -144,10 +143,10 @@ class StudentVideo extends Component {
     this.setState({messages: [...this.state.messages, mess]});
   }
 
-  getNotes() { // gets called inside getUserId function above, we need the userId before we can get the notes
+  getNotes(callback) { // gets called inside getUserId function above, we need the userId before we can get the notes
     axios.post('/userNotes', { userId: this.state.userId, videoId: this.props.location.videoId })
     .then(notes => {
-      console.log(notes);
+      callback(notes);
     })
     .catch(err => {
       console.error(err);
@@ -155,8 +154,6 @@ class StudentVideo extends Component {
   }
 
   makeNote(note) { // gets called in VideoComments on submit
-    this.setState({ notes: [note, ...this.state.notes]})
-    
     axios.post('/notes', { note: note, userId: this.state.userId, videoId: this.props.location.videoId })
     .then(res => {
       console.log(res);
@@ -178,7 +175,6 @@ class StudentVideo extends Component {
   }
   
   render() {  
-    console.log('studentvideoview state is: ', this.state.userId);
 
     return (
       <Paper style={ mainPaper } zDepth={1}>
@@ -189,6 +185,7 @@ class StudentVideo extends Component {
               startingTimestamp={ this.state.startingTimestamp }
               saveTimeStamp={ this.saveTimeStamp }
               makeNote={ this.makeNote }
+              getNotes={this.getNotes}
             />
           </Paper>
           <Paper style={ sideBarPaper }>

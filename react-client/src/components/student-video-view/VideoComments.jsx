@@ -10,6 +10,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import SwipeableViews from 'react-swipeable-views';
 import {Card, CardHeader, CardText} from 'material-ui/Card'; 
+import Divider from 'material-ui/Divider';
 
 import './VideoComments.css';
 import './TimestampListEntry.css'
@@ -24,7 +25,8 @@ class VideoComments extends Component {
       radioButtonValue: 'unclear',
       windowSize: window.innerWidth,
       slideIndex: 0,
-      note: ''
+      note: '',
+      notes: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -33,6 +35,8 @@ class VideoComments extends Component {
     this.handleRadioButtonChange = this.handleRadioButtonChange.bind(this);
     this.handleNoteChange = this.handleNoteChange.bind(this);
     this.makeNote = this.makeNote.bind(this);
+    this.showComments = this.showComments.bind(this);
+    this.getNotes = this.getNotes.bind(this);
   }
 
   handleRadioButtonChange(event) {
@@ -57,14 +61,49 @@ class VideoComments extends Component {
 
   makeNote() {
     this.props.makeNote(this.state.note);
+
+    this.setState({
+      notes: [...this.state.notes, {body: this.state.note}]
+    })
   }
 
   handleWindowResize() {
     this.setState({ windowSize: window.innerWidth });
   }
 
+  getNotes() {
+    this.props.getNotes((notes) => {
+      this.setState({
+        notes: notes.data
+      })
+    })
+  }
+  showComments() {
+
+    var notes = this.state.notes;
+
+    console.log('notes are: ', notes)
+    return notes.map((note, index) => {
+      return (
+        <div>   
+          <Card>
+            <CardHeader style={{fontWeight: "bold", backgroundColor: "lightgray"}}
+              title={'Note ' + (index + 1)}
+            />
+            <CardText>
+              {note.body}
+            </CardText>
+          </Card>
+          
+        </div>
+      )
+    })
+
+  }
+
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
+    setTimeout(() => {this.getNotes()}, 1000);
   }
 
   componentWillUnmount() {
@@ -72,6 +111,7 @@ class VideoComments extends Component {
   }
 
   render() {
+
     const tagsNames = [
       { value: "Unclear" },
       { value: "More Examples" },
@@ -167,14 +207,12 @@ class VideoComments extends Component {
             </label>
           </div>
         </SwipeableViews>
-        <Card>
-          <CardHeader
-            title="Note"
-          />
-          <CardText>
-            {'This is a sample note'}
+        <Card style={{backgroundColor: '#676767', margin: '5px 0 5px 0', textAlign: 'center', fontWeight: 'bold'}}>
+          <CardText style={{color: 'white', fontSize: '1.25em', fontFamily: 'Arial'}}>
+            Your Personal Notes
           </CardText>
-      </Card>
+        </Card>
+        {this.showComments()}
       </div>
     );
   }
