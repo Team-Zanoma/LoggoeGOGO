@@ -38,15 +38,32 @@ class StudentVideo extends Component {
     this.handleTabChange = this.handleTabChange.bind(this);
     this.getNotes = this.getNotes.bind(this);
     this.makeNote = this.makeNote.bind(this);
+    this.getUserId = this.getUserId.bind(this);
 
     this.socket = io.connect();
     this.socket.on('message', (message) => this.getMessage(message));
   }
 
   componentDidMount(){
+    this.authenticate();
     const videoId = this.props.location.videoId;
-    this.getUserId(this.props.location.username); 
-    this.getAllTimestamps();
+  }
+
+  authenticate() {
+    axios.get('/auth')
+    .then(resp => {
+      this.getUserId(resp.data); 
+    })
+  }
+
+  storeVideoId() {
+    axios.post('/videoId')
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   getUserId(user) {
@@ -55,6 +72,7 @@ class StudentVideo extends Component {
     })
       .then((data) => {
         this.setState({ userId: data.data[0].id })
+        console.log('id', data.data[0].id)
         this.getAllTimestamps();
         this.getNotes();
       }
