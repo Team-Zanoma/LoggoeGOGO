@@ -81,7 +81,16 @@ app.post('/register', (req, res) => {
 })
 //---------------------------------------------------------AUTH
 app.get('/auth', (req, res) => {
-  res.send(req.session.user);
+  res.send({user: req.session.user, videoId: req.session.videoId});
+})
+
+app.post('/videoId', (req, res) => {
+  req.session.videoId = req.body.videoId;
+  res.send();
+})
+
+app.get('/videoId', (req, res) => {
+  res.send(req.session.videoId);
 })
 
 

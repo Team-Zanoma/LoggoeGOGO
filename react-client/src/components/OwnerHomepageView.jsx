@@ -28,13 +28,17 @@ class OwnerHomepage extends React.Component {
   }
 
   componentDidMount() {
-    this.authenticate;
+    this.authenticate();
   }
 
   authenticate() {
     axios.get('/auth')
     .then(resp => {
-      this.getUserId(resp.data);
+      this.setState({ username: resp.data.user })
+      this.getUserId(resp.data.user);
+    })
+    .catch(err => {
+      console.log(err);
     })
   }
   
@@ -54,7 +58,9 @@ class OwnerHomepage extends React.Component {
 
   getUserVideos(userId) {
     axios.get('/owner/videoList', {params: {userId: userId}})
-          .then((data) => {this.setState({videos: data.data})})
+    .then((data) => {
+      this.setState({videos: data.data})
+    })
   }
 
   sendToSelectedVideo(video) {
@@ -111,7 +117,7 @@ class OwnerHomepage extends React.Component {
     return (
       <Paper style={style} zDepth={1}>
       <div id="owner-homepage-app">
-        <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
+        <header className="navbar"><h1>Hello { this.state.username }</h1></header>
         <h3>{this.state.view === 'home' ? 'uploaded videos' : 'search videos'}</h3>
         <div className="main">
         <RaisedButton label={this.state.view === 'home' ? "add videos" : "my videos"} 
