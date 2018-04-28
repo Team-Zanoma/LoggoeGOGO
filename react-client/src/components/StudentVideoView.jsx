@@ -52,7 +52,7 @@ class StudentVideo extends Component {
   authenticate() {
     axios.get('/auth')
     .then(resp => {
-      this.getUserId(resp.data); 
+      this.getUserId(resp.data.user); 
     })
   }
 
@@ -168,8 +168,7 @@ class StudentVideo extends Component {
 
   handleTabChange(value) {
     this.setState({
-      slideIndex: value,
-      // view: this.state.view === 'timestamps' ? 'chat' : 'timestamps'
+      slideIndex: value
     });
   };
 
@@ -178,7 +177,6 @@ class StudentVideo extends Component {
   }
   
   render() {  
-    console.log('studentvideoview state is: ', this.state.userId);
 
     return (
       <Paper style={ mainPaper } zDepth={1}>

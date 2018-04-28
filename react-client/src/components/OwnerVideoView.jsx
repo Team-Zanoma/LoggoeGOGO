@@ -14,20 +14,35 @@ class OwnerVideo extends React.Component {
     super(props);
     this.state = {
       timeStamps: [],
-      tabValue: 'a'
+      tabValue: 'a',
+      videoId: null
     }
 
-  this.handleTabChange = this.handleTabChange.bind(this);
+    this.handleTabChange = this.handleTabChange.bind(this);
   }
 
   componentDidMount() {
-    this.showTimestamps();
+    this.storeVideoId();
+    this.authenticate();
+  }
+
+  authenticate() {
+    axios.get('/auth')
+    .then(resp => {
+      this.setState({ username: resp.data.user, videoId: resp.data.videoId })
+      this.showTimestamps();
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   storeVideoId() {
-    axios.post('/videoId')
+    const video = this.props.location.video ? this.props.location.video.videoId : false;
+    if (!video) return;
+    axios.post('/videoId', { videoId: video })
     .then(res => {
-      console.log(res);
+      console.log('posted vid');
     })
     .catch(err => {
       console.log(err);
@@ -35,7 +50,8 @@ class OwnerVideo extends React.Component {
   }
 
   showTimestamps() {
-    axios.get('/timestamps/owner', {params: {videoId: this.props.location.video.videoId}})
+    const video = this.props.location.video ? this.props.location.video.videoId : false;
+    axios.get('/timestamps/owner', {params: {videoId: video || this.state.videoId }})
     .then((data) => {
       const timeStamps = data.data.sort((a, b)=> a.timestamp - b.timestamp)
       this.setState({timeStamps: timeStamps})
@@ -50,7 +66,6 @@ class OwnerVideo extends React.Component {
   
 
   render() {
-
     const styles = {
       headline: {
         fontSize: 24,
@@ -65,35 +80,8 @@ class OwnerVideo extends React.Component {
         <Paper style={style1}>
           {!!this.props.location.video && <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>}
         </Paper>
-        
-        <Tabs
-        value={this.state.tabValue}
-        onChange={this.handleTabChange}
-        >
-        <Tab label="Tab A" value="a">
-          <div>
-            <h2 style={styles.headline}>Controllable Tab A</h2>
-            <p>
-              Tabs are also controllable if you want to programmatically pass them their values.
-              This allows for more functionality in Tabs such as not
-              having any Tab selected or assigning them different values.
-            </p>
-          </div>
-        </Tab>
-        <Tab label="Tab B" value="b">
-          <div>
-            <h2 style={styles.headline}>Controllable Tab B</h2>
-            <p>
-              This is another example of a controllable tab. Remember, if you
-              use controllable Tabs, you need to give all of your tabs values or else
-              you wont be able to select them.
-            </p>
-          </div>
-        </Tab>
-      </Tabs>
-        
         <Paper style={style2}>
-          {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video}/>}
+          {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video || this.state.videoId}/>}
 
         </Paper>
         <Paper style={style3}>
