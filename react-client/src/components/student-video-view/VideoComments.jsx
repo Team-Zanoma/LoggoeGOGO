@@ -39,6 +39,7 @@ class VideoComments extends Component {
     this.showComments = this.showComments.bind(this);
     this.getNotes = this.getNotes.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
+    this.handleWindowResize = this.handleWindowResize.bind(this);
   }
 
   handleRadioButtonChange(event) {
@@ -69,9 +70,9 @@ class VideoComments extends Component {
     })
   }
 
-  deleteNote(e) {
-    console.log(this.state.userId)
-    axios.delete('/notes', { params: { note: e.target.innerText, user: this.state.userId } })
+  deleteNote(note) {
+    console.error('deleteNote value is:', note)
+    axios.delete('/notes', { params: { note: note.body, user: note.user_id, videoId: note.video_id } })
   }
 
   handleWindowResize() {
@@ -86,10 +87,6 @@ class VideoComments extends Component {
     })
   }
 
-  deleteNote(event) {
-
-  }
-
   showComments() {
     var notes = this.state.notes;
     return notes.map((note, index) => {
@@ -102,7 +99,7 @@ class VideoComments extends Component {
             <CardText>
               <span className="noteComment">{note.body}</span>
               <div style={{ float: 'right' }}>
-                <RaisedButton>Delete Note</RaisedButton>
+                <RaisedButton onClick={() => this.deleteNote(note)}>Delete Note</RaisedButton>
               </div>
             </CardText>
           </Card>
