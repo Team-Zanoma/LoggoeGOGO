@@ -21,6 +21,7 @@ class VideoPlayer extends Component {
         saveComment={ this.saveTimeStamp }
         makeNote={ this.props.makeNote }
         getNotes={this.props.getNotes}
+        userId={this.props.userId}
       />
     );
   }

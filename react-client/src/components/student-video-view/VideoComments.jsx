@@ -67,6 +67,11 @@ class VideoComments extends Component {
     })
   }
 
+  deleteNote(e) {
+    console.log(this.state.userId)
+    axios.delete('/notes', { params: { note: e.target.innerText, user: this.state.userId } })
+  }
+
   handleWindowResize() {
     this.setState({ windowSize: window.innerWidth });
   }
@@ -79,10 +84,7 @@ class VideoComments extends Component {
     })
   }
   showComments() {
-
     var notes = this.state.notes;
-
-    console.log('notes are: ', notes)
     return notes.map((note, index) => {
       return (
         <div>   
@@ -90,7 +92,7 @@ class VideoComments extends Component {
             <CardHeader style={{fontWeight: "bold", backgroundColor: "lightgray"}}
               title={'Note ' + (index + 1)}
             />
-            <CardText>
+            <CardText onClick={(e) => this.deleteNote(e)}>
               {note.body}
             </CardText>
           </Card>
@@ -98,7 +100,6 @@ class VideoComments extends Component {
         </div>
       )
     })
-
   }
 
   componentDidMount() {
@@ -108,6 +109,12 @@ class VideoComments extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.userId !== nextProps.userId) {
+      this.setState({ userId: nextProps.userId });
+    }
   }
 
   render() {
