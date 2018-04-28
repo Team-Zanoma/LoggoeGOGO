@@ -9,8 +9,10 @@ import RadioButton from 'material-ui/RadioButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import SwipeableViews from 'react-swipeable-views';
+import {Card, CardHeader, CardText} from 'material-ui/Card'; 
 
 import './VideoComments.css';
+import './TimestampListEntry.css'
 
 class VideoComments extends Component {
   constructor(props) {
@@ -165,6 +167,14 @@ class VideoComments extends Component {
             </label>
           </div>
         </SwipeableViews>
+        <Card>
+          <CardHeader
+            title="Note"
+          />
+          <CardText>
+            {'This is a sample note'}
+          </CardText>
+      </Card>
       </div>
     );
   }
