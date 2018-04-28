@@ -22,7 +22,9 @@ const {
   getBuckets,
   deleteTimestamp, 
   addChatMessage,
-  getAllMessages
+  getAllMessages,
+  makeNote,
+  getNotes
 } = require('../database-mysql');
 var request = require("request");
 
@@ -207,6 +209,23 @@ app.post('/chatMessages', (req, res) => {
     request(options, function (error, response, body) {
       res.send({n: body.documents[0].score.toFixed(2)*100});
     });
+  })
+})
+
+//---------------------------------------------------------NOTES
+
+app.post('/notes', (req, res) => {
+  const { note, userId, videoId } = req.body;
+  makeNote(note, userId, videoId, (err, success) => {
+    err ? res.send(err) : res.send(success);
+  })
+})
+
+app.post('/userNotes', (req, res) => {
+  const { userId, videoId } = req.body;
+  console.log(userId, videoId)
+  getNotes(userId, videoId, (err, notes) => {
+    err ? res.send(err) : res.send(notes);
   })
 })
 

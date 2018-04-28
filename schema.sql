@@ -23,12 +23,20 @@ CREATE TABLE videos (
   userId INT(11) NOT NULL,
   duration INT(11)
 );
-
 CREATE TABLE chat (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   body varchar(255) NOT NULL,
   video_id INT(20) NOT NULL,
   addedAt DATETIME NOT NULL DEFAULT NOW(),
+  FOREIGN KEY(video_id) REFERENCES videos(id)
+);
+CREATE TABLE notes (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  body varchar(255) NOT NULL,
+  user_id INT(10) NOT NULL,
+  video_id INT(40) NOT NULL,
+  addedAt DATETIME NOT NULL DEFAULT NOW(),
+  FOREIGN KEY(user_id) REFERENCES users(id),
   FOREIGN KEY(video_id) REFERENCES videos(id)
 );
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
@@ -21,12 +22,15 @@ class VideoComments extends Component {
       radioButtonValue: 'unclear',
       windowSize: window.innerWidth,
       slideIndex: 0,
+      note: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
     this.sendCommentDetails = this.sendCommentDetails.bind(this);
     this.handleRadioButtonChange = this.handleRadioButtonChange.bind(this);
+    this.handleNoteChange = this.handleNoteChange.bind(this);
+    this.makeNote = this.makeNote.bind(this);
   }
 
   handleRadioButtonChange(event) {
@@ -37,17 +41,23 @@ class VideoComments extends Component {
     this.setState({ slideIndex: value });
   };
 
-
   handleChange(comment) {
     this.setState({ comment });
   }
 
   sendCommentDetails() {
-    // console.log(this.state.comment, this.state.radioButtonValue)
     this.props.getCommentDetails(this.state.comment, this.state.radioButtonValue);
   }
 
-  handleWindowResize = () => {
+  handleNoteChange(note) {
+    this.setState({ note });
+  }
+
+  makeNote() {
+    this.props.makeNote(this.state.note);
+  }
+
+  handleWindowResize() {
     this.setState({ windowSize: window.innerWidth });
   }
 
@@ -144,12 +154,11 @@ class VideoComments extends Component {
                 id='comments'
                 dataSource={[]} 
                 refs={ 'autocomplete' }
-                onUpdateInput={ this.handleChange }
-                onNewRequest={ this.sendCommentDetails }
+                onUpdateInput={ this.handleNoteChange }
                 style={{margin: '5px'}}
               />
               <RaisedButton 
-                onClick={ this.sendCommentDetails } 
+                onClick={ this.makeNote } 
                 label="Submit" 
                 style={{margin: '5px', width: '90px'}}
               />    
