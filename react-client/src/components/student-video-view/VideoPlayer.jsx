@@ -19,6 +19,7 @@ class VideoPlayer extends Component {
         hasComments={ true }
         hasController={ true }
         saveComment={ this.saveTimeStamp }
+        makeNote={ this.props.makeNote }
       />
     );
   }

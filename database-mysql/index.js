@@ -188,7 +188,27 @@ const getAllMessages = (videoId, callback) => {
     err ? callback(err) : callback(null, result);
   })
 }
+
+//--------------------------------------------- NOTES
+
+const makeNote = (note, userId, videoId, callback) => {
+  const query = 'INSERT INTO notes (body, user_id, video_id) VALUES(?, ?, (SELECT id FROM videos WHERE videoId = ?));';
+  const values = [note, userId, videoId];
+  connection.query(query, values, (err, res) => {
+    err ? callback(err) : callback(null, res);
+  })
+}
+
+const getNotes = (userId, videoId, callback) => {
+  const query = 'SELECT * FROM notes WHERE user_id = ? AND video_id = (SELECT id FROM videos WHERE videoId = ?)';
+  const values = [userId, videoId];
+  connection.query(query, values, (err, res) => {
+    err ? callback(err) : callback(null, res);
+  })
+}
   
+exports.getNotes = getNotes;
+exports.makeNote = makeNote;  
 exports.getBuckets = getBuckets;
 exports.getUser = getUser;
 exports.setUser = setUser;
