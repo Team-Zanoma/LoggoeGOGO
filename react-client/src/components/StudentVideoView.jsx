@@ -28,6 +28,7 @@ class StudentVideo extends Component {
       messages: [],
       userInput: '',
       slideIndex: 0,
+      notes: []
     }
 
     this.getAllTimestamps = this.getAllTimestamps.bind(this);
@@ -35,6 +36,8 @@ class StudentVideo extends Component {
     this.deleteTimestamp = this.deleteTimestamp.bind(this);
     this.changeVideo = this.changeVideo.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
+    this.getNotes = this.getNotes.bind(this);
+    this.makeNote = this.makeNote.bind(this);
 
     this.socket = io.connect();
     this.socket.on('message', (message) => this.getMessage(message));
@@ -53,6 +56,7 @@ class StudentVideo extends Component {
       .then((data) => {
         this.setState({ userId: data.data[0].id })
         this.getAllTimestamps();
+        this.getNotes();
       }
     );
   }
@@ -114,12 +118,34 @@ class StudentVideo extends Component {
     }
   } 
 
-  sendMessage(message = 'hey') {
+  sendMessage(message) {
     const videoId = this.props.location.videoId;
     const username = this.props.location.username;
     const mess = {message: message, room: videoId, username: username}
     this.socket.emit('message', mess);
     this.setState({messages: [...this.state.messages, mess]});
+  }
+
+  getNotes() { // gets called inside getUserId function above, we need the userId before we can get the notes
+    axios.post('/userNotes', { userId: this.state.userId, videoId: this.props.location.videoId })
+    .then(notes => {
+      console.log(notes);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+  }
+
+  makeNote(note) { // gets called in VideoComments on submit
+    this.setState({ notes: [note, ...this.state.notes]})
+    
+    axios.post('/notes', { note: note, userId: this.state.userId, videoId: this.props.location.videoId })
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.error(err);
+    })
   }
 
   handleTabChange(value) {
@@ -144,6 +170,7 @@ class StudentVideo extends Component {
               videoId={ this.props.location.videoId } 
               startingTimestamp={ this.state.startingTimestamp }
               saveTimeStamp={ this.saveTimeStamp }
+              makeNote={ this.makeNote }
             />
           </Paper>
           <Paper style={ sideBarPaper }>
