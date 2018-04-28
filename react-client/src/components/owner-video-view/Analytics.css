@@ -1,0 +1,18 @@
+.chartBtnBar {
+	display: block;
+	padding-bottom: 20px;
+}
+
+.chartBtnBar > div:first-of-type {
+	float: left;
+}
+
+.chartBtnBar > div:last-of-type {
+	float: right;
+}
+
+.chartBtnBar:after {
+  content: "";
+  clear: both;
+  display: table;
+}

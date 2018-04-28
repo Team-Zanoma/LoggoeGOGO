@@ -18,6 +18,7 @@ class VideoPlayerComponent extends Component {
       volume: 0.8,
       muted: false,
       played: 0,
+      playing: false,
       loaded: 0,
       duration: 0,
       playbackRate: 1.0,
@@ -54,14 +55,15 @@ class VideoPlayerComponent extends Component {
     this.setState({ playing: false });
   }
 
-  onSeekMouseDown = e => {
+  onSeekMouseDown = (e) => {
     this.setState({ seeking: true });
   }
 
-  onSeekChange = e => {
+  onSeekChange = (e) => {
     this.setState({ played: parseFloat(e.target.value) });
   }
-  onSeekMouseUp = e => {
+
+  onSeekMouseUp = (e) => {
     this.setState({ seeking: false });
     this.player.seekTo(parseFloat(e.target.value));
   }
@@ -159,9 +161,9 @@ class VideoPlayerComponent extends Component {
   componentDidMount() {
     if (this.props.hasController) {
       this.getScrubberSize();
-      this.setState({ playing: true });
-    } else {
-      this.setState({ playing: false });
+    }
+    if (this.props.autoPlay) {
+      this.autoPlay();
     }
     window.addEventListener('resize', this.getScrubberSize);
   }

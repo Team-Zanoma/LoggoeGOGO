@@ -82,7 +82,6 @@ class VideoComments extends Component {
 
     var notes = this.state.notes;
 
-    console.log('notes are: ', notes)
     return notes.map((note, index) => {
       return (
         <div>   

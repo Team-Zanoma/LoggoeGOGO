@@ -18,6 +18,7 @@ class VideoPlayer extends Component {
         videoId={ testId }
         hasComments={ true }
         hasController={ true }
+        autoPlay={ true }
         saveComment={ this.saveTimeStamp }
         makeNote={ this.props.makeNote }
         getNotes={this.props.getNotes}
